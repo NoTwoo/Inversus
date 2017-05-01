@@ -17,3 +17,9 @@ using namespace std;
 #define WINDOWS_SIZE_Y 800
 #define GAMEMANAGER CGameManager::GetInstance()
 
+#define TITLE_WIDTH 70
+#define SMALL_TEXT_WIDTH 30
+
+#define BSIZE 30
+#define PIE 3.141592
+

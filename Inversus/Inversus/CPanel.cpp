@@ -1,5 +1,6 @@
 #include "Define.h"
 #include <atlstr.h>
+
 void CPanel::Draw()
 {
 	HDC hdc = GetDC(GAMEMANAGER->getHWND());

@@ -57,6 +57,9 @@
     <ClCompile Include="CPanel.cpp">
       <Filter>Game\Obj\Panel</Filter>
     </ClCompile>
+    <ClCompile Include="CPlainPanel.cpp">
+      <Filter>Game\Obj\Panel\PlainPanel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CObject.h">

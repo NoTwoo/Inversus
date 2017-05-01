@@ -52,7 +52,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		GAMEMANAGER->Init(hWnd, g_hInst);
 		EnterIntroScene();
-		SetTimer(hWnd, 1, 30, TimerProc);
+		SetTimer(hWnd, 1, 150, TimerProc);
 		
 		break;
 	case WM_GETMINMAXINFO: {
@@ -75,10 +75,19 @@ void CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
 
 	for (CObject* d : GAMEMANAGER->GetList()){
-		CPanel* tempPanel = dynamic_cast<CPanel*>(d);
-		tempPanel->Draw();
+		if (dynamic_cast<CPanel*>(d)) {
+			CPanel* tempPanel = dynamic_cast<CPanel*>(d);
+			tempPanel->Draw();
+		}
+		
+		if (dynamic_cast<CPlainPanel*>(d)) {
+			CPlainPanel* PlainPanel = dynamic_cast<CPlainPanel*>(d);
+			if (PlainPanel->GetDrawObject()) PlainPanel->DrawObject();
+			
+		}
+
 	}
-	//InvalidateRect(hWnd, NULL, TRUE);
+	
 }
 
 void EnterIntroScene()
@@ -87,6 +96,8 @@ void EnterIntroScene()
 	LONG uY{500};
 	STPenInfo stPenInfo;
 
+	// Start of PlainPanel
+
 	CObject* cTitle = new CPlainPanel;
 	cTitle->SetPos(POINT{ 0,200 });
 	rect.left = cTitle->GetPos().x; rect.right = GAMEMANAGER->GetRect().right;
@@ -94,12 +105,42 @@ void EnterIntroScene()
 	cTitle->SetRect(rect);
 	cTitle->SetColor(COLORREF(RGB(0, 0, 0)));
 	CPlainPanel* pPTitle = dynamic_cast<CPlainPanel*>(cTitle);
+
+	// Set of Object to draw
+	pPTitle->SetDrawObject(true);
+	pPTitle->SetObjectPos(POINT{ 800,315 });
+	rect.left = pPTitle->GetObjectPos().x; rect.right = rect.left + 100;
+	rect.top = pPTitle->GetObjectPos().y; rect.bottom = rect.top + 100;
+	pPTitle->SetObjectRect(rect);
+	stPenInfo.color = RGB(255, 255, 255);
+	stPenInfo.width = 2;
+	pPTitle->SetObjectPenInfo(stPenInfo);
+
+	// Set of String
 	pPTitle->SetString("I N V E R S U S");
 	stPenInfo.color = RGB(255, 255, 255);
-	stPenInfo.width = 100;
+	stPenInfo.width = TITLE_WIDTH;
 	pPTitle->SetPenInfo(stPenInfo);
 	GAMEMANAGER->GetList().push_back(cTitle);
 	
+	CObject* cTitleFirstLine = new CPlainPanel;
+	cTitleFirstLine->SetPos(POINT{ 0, 400 });
+	rect.left = cTitleFirstLine->GetPos().x; rect.right = 799;
+	rect.top = cTitleFirstLine->GetPos().y; rect.bottom = rect.top + 4;
+	cTitleFirstLine->SetRect(rect);
+	cTitleFirstLine->SetColor(COLORREF(RGB(255, 255, 255)));
+	GAMEMANAGER->GetList().push_back(cTitleFirstLine);
+
+	CObject* cTitleSecondLine = new CPlainPanel;
+	cTitleSecondLine->SetPos(POINT{ 0, 411 });
+	rect.left = cTitleSecondLine->GetPos().x; rect.right = 896;
+	rect.top = cTitleSecondLine->GetPos().y; rect.bottom = rect.top + 4;
+	cTitleSecondLine->SetRect(rect);
+	cTitleSecondLine->SetColor(COLORREF(RGB(255, 255, 255)));
+	GAMEMANAGER->GetList().push_back(cTitleSecondLine);
+
+	// End of PlainPanel
+
 	cTitle = new CActivePanel;
 	cTitle->SetPos(POINT{ 0, uY });
 	rect.left = cTitle->GetPos().x; rect.right = GAMEMANAGER->GetRect().right;
@@ -109,7 +150,7 @@ void EnterIntroScene()
 	CActivePanel* pATitle = dynamic_cast<CActivePanel*>(cTitle);
 	pATitle->SetString("N E W  G A M E");
 	stPenInfo.color = RGB(255, 255, 255);
-	stPenInfo.width = 30;
+	stPenInfo.width = SMALL_TEXT_WIDTH;
 	pATitle->SetPenInfo(stPenInfo);
 	GAMEMANAGER->GetList().push_back(cTitle);
 	uY += 70;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include <string>
 
 enum EItemType { Nothing, PlainBullet, SpecialBullet };
 
