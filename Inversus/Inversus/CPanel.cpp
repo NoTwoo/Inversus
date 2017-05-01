@@ -16,7 +16,7 @@ void CPanel::Draw()
 	hOldFont = (HFONT)SelectObject(hdc, hFont);
 
 	Rectangle(hdc, m_rect.left, m_rect.top, m_rect.right, m_rect.bottom);
-	SetBkColor(hdc, RGB(0, 0, 0));
+	SetBkColor(hdc, m_color);
 	SetTextColor(hdc, m_stPenInfo.color);
 	DrawText(hdc, m_str.c_str(), m_str.length(), &m_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 	SelectObject(hdc, hOldBrush);

@@ -1,4 +1,5 @@
 #include "Define.h"
+#include "resource.h"
 
 #pragma comment(linker , "/entry:WinMainCRTStartup /subsystem:console")
 
@@ -21,16 +22,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 	WndClass.cbClsExtra = 0;
 	WndClass.cbWndExtra = 0;
 	WndClass.hInstance = hInstance;
-	WndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	WndClass.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	WndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	WndClass.lpszMenuName = NULL;
 	WndClass.lpszClassName = lpszClass;
-	WndClass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+	WndClass.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	// 윈도우 클래스 등록
 	RegisterClassEx(&WndClass);
 	// 윈도우 생성
-	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW, 0, 0, 1280, 800, NULL, (HMENU)NULL, hInstance, NULL);
+	hWnd = CreateWindow(lpszClass, lpszClass,
+		WS_OVERLAPPED | WS_SYSMENU | WS_BORDER | WS_MINIMIZEBOX, 0, 0, 1280, 800, NULL, (HMENU)NULL, hInstance, NULL);
 	// 윈도우 출력
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
@@ -53,7 +55,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		GAMEMANAGER->Init(hWnd, g_hInst);
 		EnterIntroScene();
 		SetTimer(hWnd, 1, 150, TimerProc);
-		
+		break;
+	case WM_MOUSEMOVE:
+		GAMEMANAGER->SetMousePos(POINT{ LOWORD(lParam), HIWORD(lParam) });
+		break;
+	case WM_LBUTTONDOWN:
+		if (GAMEMANAGER->IsHelpOn()) { SetTimer(hWnd, 1, 150, TimerProc); GAMEMANAGER->SetHelpOn(); }
+		GAMEMANAGER->SetMousePos(POINT{ LOWORD(lParam), HIWORD(lParam) });
+		GAMEMANAGER->ClickProcess();
+		break;
+	case WM_CHAR:
+		if (GAMEMANAGER->IsHelpOn()) { SetTimer(hWnd, 1, 150, TimerProc); GAMEMANAGER->SetHelpOn(); }
+		break;
+	case WM_KEYDOWN:
+		if(wParam == VK_ESCAPE) PostQuitMessage(0);
 		break;
 	case WM_GETMINMAXINFO: {
 		((MINMAXINFO*)lParam)->ptMaxTrackSize.x = WINDOWS_SIZE_X;
@@ -83,9 +98,12 @@ void CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 		if (dynamic_cast<CPlainPanel*>(d)) {
 			CPlainPanel* PlainPanel = dynamic_cast<CPlainPanel*>(d);
 			if (PlainPanel->GetDrawObject()) PlainPanel->DrawObject();
-			
 		}
 
+		if (dynamic_cast<CActivePanel*>(d)) {
+			CActivePanel* ActivePanel = dynamic_cast<CActivePanel*>(d);
+			ActivePanel->ShowAnimation();
+		}
 	}
 	
 }
@@ -146,12 +164,14 @@ void EnterIntroScene()
 	rect.left = cTitle->GetPos().x; rect.right = GAMEMANAGER->GetRect().right;
 	rect.top = cTitle->GetPos().y; rect.bottom = rect.top + 50;
 	cTitle->SetRect(rect);
+
 	cTitle->SetColor(COLORREF(RGB(0, 0, 0)));
 	CActivePanel* pATitle = dynamic_cast<CActivePanel*>(cTitle);
 	pATitle->SetString("N E W  G A M E");
 	stPenInfo.color = RGB(255, 255, 255);
 	stPenInfo.width = SMALL_TEXT_WIDTH;
 	pATitle->SetPenInfo(stPenInfo);
+	pATitle->SetType(EType::NEW_GAME);
 	GAMEMANAGER->GetList().push_back(cTitle);
 	uY += 70;
 	
@@ -164,6 +184,7 @@ void EnterIntroScene()
 	pATitle = dynamic_cast<CActivePanel*>(cTitle);
 	pATitle->SetString("H E L P");
 	pATitle->SetPenInfo(stPenInfo);
+	pATitle->SetType(EType::HELP);
 	GAMEMANAGER->GetList().push_back(cTitle);
 	uY += 70;
 
@@ -176,6 +197,7 @@ void EnterIntroScene()
 	pATitle = dynamic_cast<CActivePanel*>(cTitle);
 	pATitle->SetString("E X I T");
 	pATitle->SetPenInfo(stPenInfo);
+	pATitle->SetType(EType::EXIT);
 	GAMEMANAGER->GetList().push_back(cTitle);
 
 }

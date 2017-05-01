@@ -15,6 +15,7 @@ using namespace std;
 
 #define WINDOWS_SIZE_X 1000
 #define WINDOWS_SIZE_Y 800
+
 #define GAMEMANAGER CGameManager::GetInstance()
 
 #define TITLE_WIDTH 70
@@ -23,3 +24,4 @@ using namespace std;
 #define BSIZE 30
 #define PIE 3.141592
 
+#define MAX_STR 5

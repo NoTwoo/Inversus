@@ -7,6 +7,8 @@
 #define MAP_SIZE_X 19
 #define MAP_SIZE_Y 13
 
+#define MAX_STR 5
+
 class CGameManager
 {
 public:
@@ -21,13 +23,23 @@ public:
 		m_hWnd = a_hWnd;
 		m_hInst = a_hInst;
 
+		m_hdc = GetDC(m_hWnd);
+
 		GetClientRect(a_hWnd, &m_clntrt);
+		
+		ZeroMemory(&m_MousePos, sizeof(m_MousePos));
+		m_bIsClicked = false;
+		m_bIsHelpOn = false;
+
+		m_str[0] = " W / S / A / D : MOVE";
+		m_str[1] = " กๆ / ก็ / ก่ / ก้ : SHOOT";
+		m_str[2] = " KEEP PUSHING ARROW KEY : CHARGING";
+		m_str[3] = " P : PAUSE";
+		m_str[4] = " ESC : EXIT";
+
 	}
 
 	HWND getHWND() { return m_hWnd; }
-
-	//const HDC& GetHDC() { m_hdc = GetDC(m_hWnd);  return m_hdc; }
-	//void ReleaseHDC() { ReleaseDC(m_hWnd, m_hdc); }
 
 	HINSTANCE GethInst() { return m_hInst; }
 	void SetInst(HINSTANCE& a_hInst) { m_hInst = a_hInst; }
@@ -47,6 +59,14 @@ public:
 
 	std::list<CObject*>& GetList() { return m_List; }
 
+public:
+	void SetMousePos(const POINT& a_pos) { m_MousePos = a_pos; }
+	const POINT& GetMousePos() { return m_MousePos; }
+	void ShowManual();
+	void ClickProcess();
+	const bool& IsHelpOn();
+	void SetHelpOn();
+
 private:
 	CGameManager() {};
 	CGameManager(const CGameManager&) = delete;
@@ -64,5 +84,13 @@ private:
 	HDC m_hdc;
 	HINSTANCE m_hInst;
 	RECT m_clntrt;
+
+private:
+	POINT m_MousePos;
+	bool m_bIsClicked;
+	bool m_bIsHelpOn;
+
+private:
+	std::string m_str[MAX_STR];
 };
 

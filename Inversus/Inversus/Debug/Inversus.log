@@ -1,15 +1,3 @@
-﻿  Main.cpp
-  CPlainPanel.cpp
-s:\kpu\4-1\apiproject\inversus\inversus\inversus\cplainpanel.cpp(21): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
-s:\kpu\4-1\apiproject\inversus\inversus\inversus\cplainpanel.cpp(22): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
-s:\kpu\4-1\apiproject\inversus\inversus\inversus\cplainpanel.cpp(38): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
-s:\kpu\4-1\apiproject\inversus\inversus\inversus\cplainpanel.cpp(39): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
-s:\kpu\4-1\apiproject\inversus\inversus\inversus\cplainpanel.cpp(87): warning C4305: '=': truncation from 'double' to 'float'
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  CPlayer.cpp
-  CPanel.cpp
-  CObject.cpp
-  CChracter.cpp
+﻿  CGameManager.cpp
   Inversus.vcxproj -> S:\KPU\4-1\APIProject\Inversus\Inversus\Debug\Inversus.exe
   Inversus.vcxproj -> S:\KPU\4-1\APIProject\Inversus\Inversus\Debug\Inversus.pdb (Partial PDB)

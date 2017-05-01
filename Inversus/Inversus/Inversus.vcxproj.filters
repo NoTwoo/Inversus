@@ -60,6 +60,9 @@
     <ClCompile Include="CPlainPanel.cpp">
       <Filter>Game\Obj\Panel\PlainPanel</Filter>
     </ClCompile>
+    <ClCompile Include="CActivePanel.cpp">
+      <Filter>Game\Obj\Panel\ActivePanel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CObject.h">
@@ -89,5 +92,18 @@
     <ClInclude Include="CPlainPanel.h">
       <Filter>Game\Obj\Panel\PlainPanel</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Game\Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Inversus.rc">
+      <Filter>Game\Obj\Character</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>Game\Obj\Character</Filter>
+    </Image>
   </ItemGroup>
 </Project>

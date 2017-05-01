@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CActivePanel.cpp" />
     <ClCompile Include="CChracter.cpp" />
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CObject.cpp" />
@@ -157,6 +158,13 @@
     <ClInclude Include="CPlainPanel.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Inversus.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
