@@ -1,7 +1,6 @@
 #pragma once
 
 #include <list>
-
 #include "CObject.h"
 
 #define MAP_SIZE_X 19
@@ -37,6 +36,7 @@ public:
 		m_str[3] = " P : PAUSE";
 		m_str[4] = " ESC : EXIT";
 
+		m_bIsInGame = false;
 	}
 
 	HWND getHWND() { return m_hWnd; }
@@ -57,7 +57,7 @@ public:
 	
 	UINT GetScore() { return m_uScore; }
 
-	std::list<CObject*>& GetList() { return m_List; }
+	std::list<CObject*>& GetIntroList() { return m_IntroList; }
 
 public:
 	void SetMousePos(const POINT& a_pos) { m_MousePos = a_pos; }
@@ -66,6 +66,12 @@ public:
 	void ClickProcess();
 	const bool& IsHelpOn();
 	void SetHelpOn();
+
+public:
+	const bool& IsInGame() { return m_bIsInGame; }
+	void SetInGame(bool const& a_bool) { m_bIsInGame = a_bool; }
+	void EnterInGameScene();
+	std::list<CObject*>& GetGameList() { return m_GameList; }
 
 private:
 	CGameManager() {};
@@ -77,8 +83,8 @@ private:
 private:
 	BYTE m_bytMap[MAP_SIZE_Y][MAP_SIZE_X];
 	UINT m_uScore;
-	std::list<CObject*> m_List;
-
+	std::list<CObject*> m_IntroList;
+	std::list<CObject*> m_GameList;
 private:
 	HWND m_hWnd;
 	HDC m_hdc;
@@ -92,5 +98,8 @@ private:
 
 private:
 	std::string m_str[MAX_STR];
+
+private:
+	bool m_bIsInGame;
 };
 

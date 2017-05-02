@@ -18,8 +18,8 @@ class CPanel : public CObject
 {
 
 public:
-	void IsMouseOver();
-	void Draw();
+	void DrawWithText();
+	virtual void Draw() override;
 
 	const std::string& GetString();
 	void SetString(const std::string& a_str);

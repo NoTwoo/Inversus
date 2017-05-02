@@ -1,4 +1,3 @@
-#include "CPlayer.h"
 #include "Define.h"
 
 void CPlayer::Move(const EMove& a_eMove)
@@ -11,3 +10,8 @@ void CPlayer::Move(const EMove& a_eMove)
 	}
 }
 
+CPlayer::CPlayer()
+{
+	m_bytLife = 3;
+
+}

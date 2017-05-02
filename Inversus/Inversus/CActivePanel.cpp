@@ -1,4 +1,3 @@
-#include "CActivePanel.h"
 #include "Define.h"
 
 void CActivePanel::ShowAnimation()

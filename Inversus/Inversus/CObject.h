@@ -34,6 +34,9 @@ public:
 
 	const RECT& GetRect();
 	void SetRect(const RECT& a_rect);
+
+public:
+	virtual void Draw() {};
 protected:
 	POINT m_pos;
 	RECT m_rect;

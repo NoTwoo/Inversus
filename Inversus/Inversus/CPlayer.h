@@ -7,7 +7,12 @@
 class CPlayer : public CCharacter
 {
 public:
-	virtual void Move(const EMove& a_eMove);
+	void Move(const EMove& a_eMove);
+	virtual void Move() override {};
+public:
+	CPlayer();
+
 private:
 	std::vector<STItem> m_vItemList;
+	
 };

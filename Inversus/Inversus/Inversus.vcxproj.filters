@@ -37,6 +37,9 @@
     <Filter Include="Game\Obj\Panel\PlainPanel">
       <UniqueIdentifier>{de25d687-30bf-47f5-b3d6-640dd1925ff7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Obj\Map">
+      <UniqueIdentifier>{b1f5fb5a-9624-4292-a279-c35013fd826c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -62,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="CActivePanel.cpp">
       <Filter>Game\Obj\Panel\ActivePanel</Filter>
+    </ClCompile>
+    <ClCompile Include="CMap.cpp">
+      <Filter>Game\Obj\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Game\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CMap.h">
+      <Filter>Game\Obj\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

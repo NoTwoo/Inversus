@@ -1,7 +1,7 @@
 #include "Define.h"
 #include <atlstr.h>
 
-void CPanel::Draw()
+void CPanel::DrawWithText()
 {
 	HDC hdc = GetDC(GAMEMANAGER->getHWND());
 	HBRUSH hBrush, hOldBrush;
@@ -23,6 +23,22 @@ void CPanel::Draw()
 	SelectObject(hdc, hOldFont);
 	DeleteObject(hBrush);
 	DeleteObject(hFont);
+	ReleaseDC(GAMEMANAGER->getHWND(), hdc);
+}
+
+void CPanel::Draw()
+{
+	HDC hdc = GetDC(GAMEMANAGER->getHWND());
+
+	HBRUSH hBrush, hOldBrush;
+
+	hBrush = CreateSolidBrush(m_color);
+	hOldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+
+	FillRect(hdc,&m_rect, hBrush);
+
+	SelectObject(hdc, hOldBrush);
+	DeleteObject(hBrush);
 	ReleaseDC(GAMEMANAGER->getHWND(), hdc);
 }
 

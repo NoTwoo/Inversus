@@ -45,7 +45,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
 }
 
 void EnterIntroScene();
-void EnterInGameScene();
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -65,7 +64,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		GAMEMANAGER->ClickProcess();
 		break;
 	case WM_CHAR:
-		if (GAMEMANAGER->IsHelpOn()) { SetTimer(hWnd, 1, 150, TimerProc); GAMEMANAGER->SetHelpOn(); }
+		switch (wParam) {
+		case 'p':
+		case 'P':
+			break;
+		default:
+			if (GAMEMANAGER->IsHelpOn()) { SetTimer(hWnd, 1, 150, TimerProc); GAMEMANAGER->SetHelpOn(); }
+		}
 		break;
 	case WM_KEYDOWN:
 		if(wParam == VK_ESCAPE) PostQuitMessage(0);
@@ -89,23 +94,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 void CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
 
-	for (CObject* d : GAMEMANAGER->GetList()){
-		if (dynamic_cast<CPanel*>(d)) {
-			CPanel* tempPanel = dynamic_cast<CPanel*>(d);
-			tempPanel->Draw();
-		}
-		
-		if (dynamic_cast<CPlainPanel*>(d)) {
-			CPlainPanel* PlainPanel = dynamic_cast<CPlainPanel*>(d);
-			if (PlainPanel->GetDrawObject()) PlainPanel->DrawObject();
-		}
+	if (!GAMEMANAGER->IsInGame()) {
+		for (CObject* d : GAMEMANAGER->GetIntroList()) {
+			if (dynamic_cast<CPanel*>(d)) {
+				CPanel* tempPanel = dynamic_cast<CPanel*>(d);
+				tempPanel->DrawWithText();
+			}
 
-		if (dynamic_cast<CActivePanel*>(d)) {
-			CActivePanel* ActivePanel = dynamic_cast<CActivePanel*>(d);
-			ActivePanel->ShowAnimation();
+			if (dynamic_cast<CPlainPanel*>(d)) {
+				CPlainPanel* PlainPanel = dynamic_cast<CPlainPanel*>(d);
+				if (PlainPanel->GetDrawObject()) PlainPanel->DrawObject();
+			}
+
+			if (dynamic_cast<CActivePanel*>(d)) {
+				CActivePanel* ActivePanel = dynamic_cast<CActivePanel*>(d);
+				ActivePanel->ShowAnimation();
+			}
 		}
 	}
-	
+
+	else {
+
+		for (CObject* d : GAMEMANAGER->GetGameList()) {
+			d->Draw();
+
+		}
+	}
 }
 
 void EnterIntroScene()
@@ -116,7 +130,7 @@ void EnterIntroScene()
 
 	// Start of PlainPanel
 
-	CObject* cTitle = new CPlainPanel;
+	CObject* cTitle  = new CPlainPanel;
 	cTitle->SetPos(POINT{ 0,200 });
 	rect.left = cTitle->GetPos().x; rect.right = GAMEMANAGER->GetRect().right;
 	rect.top = cTitle->GetPos().y; rect.bottom = rect.top + 250;
@@ -139,7 +153,7 @@ void EnterIntroScene()
 	stPenInfo.color = RGB(255, 255, 255);
 	stPenInfo.width = TITLE_WIDTH;
 	pPTitle->SetPenInfo(stPenInfo);
-	GAMEMANAGER->GetList().push_back(cTitle);
+	GAMEMANAGER->GetIntroList().push_back(cTitle);
 	
 	CObject* cTitleFirstLine = new CPlainPanel;
 	cTitleFirstLine->SetPos(POINT{ 0, 400 });
@@ -147,7 +161,7 @@ void EnterIntroScene()
 	rect.top = cTitleFirstLine->GetPos().y; rect.bottom = rect.top + 4;
 	cTitleFirstLine->SetRect(rect);
 	cTitleFirstLine->SetColor(COLORREF(RGB(255, 255, 255)));
-	GAMEMANAGER->GetList().push_back(cTitleFirstLine);
+	GAMEMANAGER->GetIntroList().push_back(cTitleFirstLine);
 
 	CObject* cTitleSecondLine = new CPlainPanel;
 	cTitleSecondLine->SetPos(POINT{ 0, 411 });
@@ -155,7 +169,7 @@ void EnterIntroScene()
 	rect.top = cTitleSecondLine->GetPos().y; rect.bottom = rect.top + 4;
 	cTitleSecondLine->SetRect(rect);
 	cTitleSecondLine->SetColor(COLORREF(RGB(255, 255, 255)));
-	GAMEMANAGER->GetList().push_back(cTitleSecondLine);
+	GAMEMANAGER->GetIntroList().push_back(cTitleSecondLine);
 
 	// End of PlainPanel
 
@@ -172,7 +186,7 @@ void EnterIntroScene()
 	stPenInfo.width = SMALL_TEXT_WIDTH;
 	pATitle->SetPenInfo(stPenInfo);
 	pATitle->SetType(EType::NEW_GAME);
-	GAMEMANAGER->GetList().push_back(cTitle);
+	GAMEMANAGER->GetIntroList().push_back(cTitle);
 	uY += 70;
 	
 	cTitle = new CActivePanel;
@@ -185,7 +199,7 @@ void EnterIntroScene()
 	pATitle->SetString("H E L P");
 	pATitle->SetPenInfo(stPenInfo);
 	pATitle->SetType(EType::HELP);
-	GAMEMANAGER->GetList().push_back(cTitle);
+	GAMEMANAGER->GetIntroList().push_back(cTitle);
 	uY += 70;
 
 	cTitle = new CActivePanel;
@@ -198,11 +212,7 @@ void EnterIntroScene()
 	pATitle->SetString("E X I T");
 	pATitle->SetPenInfo(stPenInfo);
 	pATitle->SetType(EType::EXIT);
-	GAMEMANAGER->GetList().push_back(cTitle);
+	GAMEMANAGER->GetIntroList().push_back(cTitle);
 
 }
 
-void EnterInGameScene()
-{
-
-}

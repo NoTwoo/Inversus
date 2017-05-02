@@ -142,6 +142,7 @@
     <ClCompile Include="CActivePanel.cpp" />
     <ClCompile Include="CChracter.cpp" />
     <ClCompile Include="CGameManager.cpp" />
+    <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CPanel.cpp" />
     <ClCompile Include="CPlainPanel.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="CCharacter.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CGameManager.h" />
+    <ClInclude Include="CMap.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CPanel.h" />
     <ClInclude Include="CPlainPanel.h" />

@@ -1,4 +1,3 @@
-#include "CObject.h"
 #include "Define.h"
 
 CObject::CObject(){ ZeroMemory(&m_pos, sizeof(m_pos)); }

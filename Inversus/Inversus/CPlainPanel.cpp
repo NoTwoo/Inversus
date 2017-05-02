@@ -1,4 +1,3 @@
-#include "CPlainPanel.h"
 #include "Define.h"
 
 bool CPlainPanel::GetDrawObject() { return m_bDrawObject; }
@@ -18,8 +17,8 @@ void CPlainPanel::SetObjectRect(const RECT& a_rect)
 	for (int i = 0; i < 4; ++i) {
 		m_stRotatingBullet[i].angle = Angle;
 		m_stRotatingBullet[i].r = m_stRotatingBullet[i].angle * m_flDR;
-		m_stRotatingBullet[i].pos.x = (sin(m_stRotatingBullet[i].r) * BSIZE) + m_CenterPos.x;
-		m_stRotatingBullet[i].pos.y = (cos(m_stRotatingBullet[i].r) * BSIZE) + m_CenterPos.y;
+		m_stRotatingBullet[i].pos.x = static_cast<LONG>((sin(m_stRotatingBullet[i].r) * BSIZE) + m_CenterPos.x);
+		m_stRotatingBullet[i].pos.y = static_cast<LONG>((cos(m_stRotatingBullet[i].r) * BSIZE) + m_CenterPos.y);
 		Angle += 60.0f;
 	}
 
@@ -35,8 +34,8 @@ void CPlainPanel::RotateBullet()
 		else m_stRotatingBullet[i].angle = 30.0f;
 
 		m_stRotatingBullet[i].r = m_stRotatingBullet[i].angle * m_flDR;
-		m_stRotatingBullet[i].pos.x = (sin(m_stRotatingBullet[i].r) * BSIZE) + m_CenterPos.x;
-		m_stRotatingBullet[i].pos.y = (cos(m_stRotatingBullet[i].r) * BSIZE) + m_CenterPos.y;
+		m_stRotatingBullet[i].pos.x = static_cast<LONG>((sin(m_stRotatingBullet[i].r) * BSIZE) + m_CenterPos.x);
+		m_stRotatingBullet[i].pos.y = static_cast<LONG>((cos(m_stRotatingBullet[i].r) * BSIZE) + m_CenterPos.y);
 	}
 
 
@@ -84,7 +83,7 @@ CPlainPanel::CPlainPanel()
 	ZeroMemory(&m_ObjectPos, sizeof(m_ObjectPos));
 	ZeroMemory(&m_ObjectRect, sizeof(m_ObjectRect));
 	ZeroMemory(&m_CenterPos, sizeof(m_CenterPos));
-	m_flDR = PIE / 180;
+	m_flDR = static_cast<float>(PIE / 180);
 
 	m_stRotatingBullet[0].color = RGB(178, 235, 244); // BLUE
 	m_stRotatingBullet[1].color = RGB(255, 255, 255); // WHITE
