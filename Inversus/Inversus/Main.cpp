@@ -126,7 +126,7 @@ void EnterIntroScene()
 {
 	RECT rect;
 	LONG uY{500};
-	STPenInfo stPenInfo;
+	STTextInfo stTextInfo;
 
 	// Start of PlainPanel
 
@@ -144,15 +144,15 @@ void EnterIntroScene()
 	rect.left = pPTitle->GetObjectPos().x; rect.right = rect.left + 100;
 	rect.top = pPTitle->GetObjectPos().y; rect.bottom = rect.top + 100;
 	pPTitle->SetObjectRect(rect);
-	stPenInfo.color = RGB(255, 255, 255);
-	stPenInfo.width = 2;
-	pPTitle->SetObjectPenInfo(stPenInfo);
+	stTextInfo.color = RGB(255, 255, 255);
+	stTextInfo.width = 2;
+	pPTitle->SetObjectPenInfo(stTextInfo);
 
 	// Set of String
 	pPTitle->SetString("I N V E R S U S");
-	stPenInfo.color = RGB(255, 255, 255);
-	stPenInfo.width = TITLE_WIDTH;
-	pPTitle->SetPenInfo(stPenInfo);
+	stTextInfo.color = RGB(255, 255, 255);
+	stTextInfo.width = TITLE_WIDTH;
+	pPTitle->SetTextInfo(stTextInfo);
 	GAMEMANAGER->GetIntroList().push_back(cTitle);
 	
 	CObject* cTitleFirstLine = new CPlainPanel;
@@ -182,9 +182,9 @@ void EnterIntroScene()
 	cTitle->SetColor(COLORREF(RGB(0, 0, 0)));
 	CActivePanel* pATitle = dynamic_cast<CActivePanel*>(cTitle);
 	pATitle->SetString("N E W  G A M E");
-	stPenInfo.color = RGB(255, 255, 255);
-	stPenInfo.width = SMALL_TEXT_WIDTH;
-	pATitle->SetPenInfo(stPenInfo);
+	stTextInfo.color = RGB(255, 255, 255);
+	stTextInfo.width = SMALL_TEXT_WIDTH;
+	pATitle->SetTextInfo(stTextInfo);
 	pATitle->SetType(EType::NEW_GAME);
 	GAMEMANAGER->GetIntroList().push_back(cTitle);
 	uY += 70;
@@ -197,7 +197,7 @@ void EnterIntroScene()
 	cTitle->SetColor(COLORREF(RGB(0, 0, 0)));
 	pATitle = dynamic_cast<CActivePanel*>(cTitle);
 	pATitle->SetString("H E L P");
-	pATitle->SetPenInfo(stPenInfo);
+	pATitle->SetTextInfo(stTextInfo);
 	pATitle->SetType(EType::HELP);
 	GAMEMANAGER->GetIntroList().push_back(cTitle);
 	uY += 70;
@@ -210,7 +210,7 @@ void EnterIntroScene()
 	cTitle->SetColor(COLORREF(RGB(0, 0, 0)));
 	pATitle = dynamic_cast<CActivePanel*>(cTitle);
 	pATitle->SetString("E X I T");
-	pATitle->SetPenInfo(stPenInfo);
+	pATitle->SetTextInfo(stTextInfo);
 	pATitle->SetType(EType::EXIT);
 	GAMEMANAGER->GetIntroList().push_back(cTitle);
 

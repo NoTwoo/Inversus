@@ -1,6 +1,6 @@
 #include "Define.h"
 
-void CMap::Draw()
+void CMap::Draw() 
 {
 	HDC hdc = GetDC(GAMEMANAGER->getHWND());
 	HBRUSH hBrush, hOldBrush;

@@ -40,6 +40,9 @@
     <Filter Include="Game\Obj\Map">
       <UniqueIdentifier>{b1f5fb5a-9624-4292-a279-c35013fd826c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Obj\Text">
+      <UniqueIdentifier>{f0768082-3889-4c63-b336-0ddcec717d89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -68,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="CMap.cpp">
       <Filter>Game\Obj\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="CText.cpp">
+      <Filter>Game\Obj\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="CMap.h">
       <Filter>Game\Obj\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="CText.h">
+      <Filter>Game\Obj\Text</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

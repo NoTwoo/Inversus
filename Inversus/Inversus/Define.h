@@ -14,6 +14,7 @@
 #include "CPlainPanel.h"
 #include "CActivePanel.h"
 #include "CMap.h"
+#include "CText.h"
 
 using namespace std;
 

@@ -24,7 +24,7 @@ void CPlainPanel::SetObjectRect(const RECT& a_rect)
 
 }
 
-void CPlainPanel::SetObjectPenInfo(const STPenInfo& a_stPenInfo) { m_stObjectPenInfo = a_stPenInfo; }
+void CPlainPanel::SetObjectPenInfo(const STTextInfo& a_stPenInfo) { m_stObjectPenInfo = a_stPenInfo; }
 
 void CPlainPanel::RotateBullet()
 {

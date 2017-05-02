@@ -102,6 +102,22 @@ void CGameManager::EnterInGameScene()
 		uXSize += BSIZE + 20;
 	}
 
+	CObject* pText = new CText;
+	pText->SetPos(POINT{ BSIZE,0 });
+	rect.left = pText->GetPos().x; rect.right = GAMEMANAGER->GetRect().right;
+	rect.top = pText->GetPos().y; rect.bottom = rect.top + OBJECT_SIZE;
+	pText->SetRect(rect);
+	pText->SetColor(RGB(255, 255, 255));
+
+	CText* pText2 = dynamic_cast<CText*>(pText);
+	STTextInfo stTextInfo;
+	stTextInfo.color = RGB(0, 0, 0);
+	stTextInfo.width = SMALL_TEXT_WIDTH;
+	pText2->SetTextInfo(stTextInfo);
+	pText2->SetString("Score");
+
+	m_GameList.push_back(pText);
+
 	LONG lSizeX{}, lSizeY{};
 	for (int y = 0; y < MAP_SIZE_Y; ++y) {
 		for (int x = 0; x < MAP_SIZE_X; ++x) {

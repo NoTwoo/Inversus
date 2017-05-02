@@ -147,6 +147,7 @@
     <ClCompile Include="CPanel.cpp" />
     <ClCompile Include="CPlainPanel.cpp" />
     <ClCompile Include="CPlayer.cpp" />
+    <ClCompile Include="CText.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="CPanel.h" />
     <ClInclude Include="CPlainPanel.h" />
     <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="CText.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

@@ -2,18 +2,6 @@
 
 #include "CObject.h"
 
-struct STPenInfo
-{
-	COLORREF color;
-	BYTE width;
-
-	STPenInfo()
-	{
-		ZeroMemory(&color, sizeof(color));
-		width = 0;
-	}
-};
-
 class CPanel : public CObject
 {
 
@@ -24,9 +12,9 @@ public:
 	const std::string& GetString();
 	void SetString(const std::string& a_str);
 
-	const STPenInfo& GetPenInfo();
-	void SetPenInfo(const STPenInfo& a_stPenInfo);
+	const STTextInfo& GetPenInfo();
+	void SetTextInfo(const STTextInfo& a_stTextInfo);
 private:
 	std::string m_str;
-	STPenInfo m_stPenInfo;
+	STTextInfo m_stTextInfo;
 };

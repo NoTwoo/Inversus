@@ -5,6 +5,18 @@
 
 enum EItemType { Nothing, PlainBullet, SpecialBullet };
 
+struct STTextInfo
+{
+	COLORREF color;
+	BYTE width;
+
+	STTextInfo()
+	{
+		ZeroMemory(&color, sizeof(color));
+		width = 0;
+	}
+};
+
 struct STItem
 {
 	EItemType eItemType;

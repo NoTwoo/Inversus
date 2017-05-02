@@ -31,7 +31,7 @@ public:
 	void SetObjectRect(const RECT& a_rect);
 
 public:
-	void SetObjectPenInfo(const STPenInfo& a_stPenInfo);
+	void SetObjectPenInfo(const STTextInfo& a_stPenInfo);
 
 public:
 	void RotateBullet();
@@ -46,7 +46,7 @@ private:
 	bool m_bDrawObject;
 	POINT m_ObjectPos;
 	RECT m_ObjectRect;
-	STPenInfo m_stObjectPenInfo;
+	STTextInfo m_stObjectPenInfo;
 	POINT m_CenterPos;
 	STRotatingBullet m_stRotatingBullet[4];
 	float m_flDR;
