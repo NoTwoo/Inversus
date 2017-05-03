@@ -72,7 +72,7 @@ public:
 	void SetInGame(bool const& a_bool) { m_bIsInGame = a_bool; }
 	void EnterInGameScene();
 	std::list<CObject*>& GetGameList() { return m_GameList; }
-
+	std::list<CObject*>& GetPlayerList() { return m_PlayerList; }
 private:
 	CGameManager() {};
 	CGameManager(const CGameManager&) = delete;
@@ -85,6 +85,7 @@ private:
 	UINT m_uScore;
 	std::list<CObject*> m_IntroList;
 	std::list<CObject*> m_GameList;
+	std::list<CObject*> m_PlayerList;
 private:
 	HWND m_hWnd;
 	HDC m_hdc;

@@ -7,12 +7,27 @@
 class CPlayer : public CCharacter
 {
 public:
+	virtual void Draw() override;
+
+public:
 	void Move(const EMove& a_eMove);
 	virtual void Move() override {};
+	void RePositionBullet();
+
+public:
+	virtual void Attack() override {};
+	void Attack(const EAttack& a_eAttack);
+
+public:
+	bool ChkCollision(const EMove& a_eMove) ;
+
+public:
+	void InitItem();
+
 public:
 	CPlayer();
 
 private:
-	std::vector<STItem> m_vItemList;
+	std::vector<CObject*> m_vItemList;
 	
 };

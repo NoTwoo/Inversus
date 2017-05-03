@@ -92,6 +92,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -142,11 +143,13 @@
     <ClCompile Include="CActivePanel.cpp" />
     <ClCompile Include="CChracter.cpp" />
     <ClCompile Include="CGameManager.cpp" />
+    <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CPanel.cpp" />
     <ClCompile Include="CPlainPanel.cpp" />
     <ClCompile Include="CPlayer.cpp" />
+    <ClCompile Include="CRotatingBullet.cpp" />
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -155,11 +158,13 @@
     <ClInclude Include="CCharacter.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CGameManager.h" />
+    <ClInclude Include="CBullet.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CPanel.h" />
     <ClInclude Include="CPlainPanel.h" />
     <ClInclude Include="CPlayer.h" />
+    <ClInclude Include="CRotatingBullet.h" />
     <ClInclude Include="CText.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="resource.h" />

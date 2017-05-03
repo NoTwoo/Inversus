@@ -2,11 +2,7 @@
 
 const BYTE& CCharacter::GetLife() { return m_bytLife; }
 
-void CCharacter::ChkCollision()
-{
-	
-
-}
+bool CCharacter::ChkCollision(){ return false; }
 
 
 

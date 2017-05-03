@@ -43,6 +43,15 @@
     <Filter Include="Game\Obj\Text">
       <UniqueIdentifier>{f0768082-3889-4c63-b336-0ddcec717d89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Obj\Item">
+      <UniqueIdentifier>{103ba3e0-4f0a-47ca-9245-1932f6e1697b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Obj\Item\Bullet">
+      <UniqueIdentifier>{3791e200-948c-447d-bafb-51a9bc8e2138}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Obj\Item\Bullet\RotatingBullet">
+      <UniqueIdentifier>{7bde8525-08f3-4331-87c2-1879f45df1bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -74,6 +83,12 @@
     </ClCompile>
     <ClCompile Include="CText.cpp">
       <Filter>Game\Obj\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>Game\Obj\Item\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CRotatingBullet.cpp">
+      <Filter>Game\Obj\Item\Bullet\RotatingBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="CText.h">
       <Filter>Game\Obj\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>Game\Obj\Item\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CRotatingBullet.h">
+      <Filter>Game\Obj\Item\Bullet\RotatingBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

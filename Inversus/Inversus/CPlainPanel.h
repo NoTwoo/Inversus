@@ -2,21 +2,6 @@
 
 #include "CPanel.h"
 
-struct STRotatingBullet
-{
-	COLORREF color;
-	POINT pos;
-	float angle;
-	float r;
-	STRotatingBullet()
-	{
-		ZeroMemory(&color, sizeof(color));
-		ZeroMemory(&pos, sizeof(pos));
-		angle = 0.0f;
-		r = 0.0f;
-	}
-};
-
 class CPlainPanel : public CPanel
 {
 public:

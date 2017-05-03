@@ -17,19 +17,20 @@ struct STTextInfo
 	}
 };
 
-struct STItem
+
+struct STRotatingBullet
 {
-	EItemType eItemType;
-	bool bIsAvailable;
 	COLORREF color;
-
-	STItem()
+	POINT pos;
+	float angle;
+	float r;
+	STRotatingBullet()
 	{
-		eItemType = Nothing;
-		bIsAvailable = false;
-		color = RGB(255, 255, 255);
-	};
-
+		ZeroMemory(&color, sizeof(color));
+		ZeroMemory(&pos, sizeof(pos));
+		angle = 0.0f;
+		r = 0.0f;
+	}
 };
 
 class CObject

@@ -15,6 +15,8 @@
 #include "CActivePanel.h"
 #include "CMap.h"
 #include "CText.h"
+#include "CBullet.h"
+#include "CRotatingBullet.h"
 
 using namespace std;
 
@@ -31,7 +33,15 @@ using namespace std;
 
 #define BSIZE 30
 #define PIE 3.141592
+#define DR (PIE/180)
 
 #define MAX_STR 5
 
 #define OBJECT_SIZE 47
+#define CHARACTER_SIZE 37
+
+#define INTERVAL 2
+
+#define MAX_BULLET 5
+
+#define SMALL_BULLET_SIZE 3

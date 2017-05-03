@@ -53,13 +53,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		GAMEMANAGER->Init(hWnd, g_hInst);
 		EnterIntroScene();
-		SetTimer(hWnd, 1, 150, TimerProc);
+		SetTimer(hWnd, 1, 50, TimerProc);
 		break;
 	case WM_MOUSEMOVE:
 		GAMEMANAGER->SetMousePos(POINT{ LOWORD(lParam), HIWORD(lParam) });
 		break;
 	case WM_LBUTTONDOWN:
-		if (GAMEMANAGER->IsHelpOn()) { SetTimer(hWnd, 1, 150, TimerProc); GAMEMANAGER->SetHelpOn(); }
+		if (GAMEMANAGER->IsHelpOn()) { SetTimer(hWnd, 1, 50, TimerProc); GAMEMANAGER->SetHelpOn(); }
 		GAMEMANAGER->SetMousePos(POINT{ LOWORD(lParam), HIWORD(lParam) });
 		GAMEMANAGER->ClickProcess();
 		break;
@@ -68,12 +68,67 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case 'p':
 		case 'P':
 			break;
+		case 'w':
+		case 'W':
+			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+				pPlayer->Move(EMove::UP);
+			}
+			break;
+		case 's':
+		case 'S':
+			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+				pPlayer->Move(EMove::DOWN);
+			}
+			break;
+
+		case 'a':
+		case 'A':
+			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+				pPlayer->Move(EMove::LEFT);
+			}
+			break;
+		case 'd':
+		case 'D':
+			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+				pPlayer->Move(EMove::RIGHT);
+			}
+			break;
 		default:
 			if (GAMEMANAGER->IsHelpOn()) { SetTimer(hWnd, 1, 150, TimerProc); GAMEMANAGER->SetHelpOn(); }
 		}
 		break;
 	case WM_KEYDOWN:
-		if(wParam == VK_ESCAPE) PostQuitMessage(0);
+		switch (wParam) {
+		case VK_ESCAPE: PostQuitMessage(0); break;
+		case VK_UP:
+			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+				pPlayer->Attack(EAttack::UP_ATTACK);
+			}
+			break;
+		case VK_DOWN:
+			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+				pPlayer->Attack(EAttack::DOWN_ATTACK);
+			}
+			break;
+		case VK_LEFT:
+			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+				pPlayer->Attack(EAttack::LEFT_ATTACK);
+			}
+			break;
+		case VK_RIGHT: 
+			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+				pPlayer->Attack(EAttack::RIGHT_ATTACK);
+			}
+			break;
+		}
 		break;
 	case WM_GETMINMAXINFO: {
 		((MINMAXINFO*)lParam)->ptMaxTrackSize.x = WINDOWS_SIZE_X;
@@ -115,11 +170,10 @@ void CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 
 	else {
 
-		for (CObject* d : GAMEMANAGER->GetGameList()) {
-			d->Draw();
-
-		}
+		for (CObject* d : GAMEMANAGER->GetGameList()) d->Draw();
+		for (CObject* d : GAMEMANAGER->GetPlayerList()) d->Draw();
 	}
+
 }
 
 void EnterIntroScene()

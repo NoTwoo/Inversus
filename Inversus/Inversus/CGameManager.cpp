@@ -118,7 +118,14 @@ void CGameManager::EnterInGameScene()
 
 	m_GameList.push_back(pText);
 
+
+	// Map
 	LONG lSizeX{}, lSizeY{};
+
+	int nLeftEnd = ((OBJECT_SIZE + INTERVAL) * 8);
+	int nRightEnd = ((OBJECT_SIZE + INTERVAL) * 12);
+	bool bTriangle = true;
+
 	for (int y = 0; y < MAP_SIZE_Y; ++y) {
 		for (int x = 0; x < MAP_SIZE_X; ++x) {
 			CObject* pMap = new CMap;
@@ -127,12 +134,47 @@ void CGameManager::EnterInGameScene()
 			rect.left = pMap->GetPos().x; rect.right = rect.left + OBJECT_SIZE;
 			rect.top = pMap->GetPos().y; rect.bottom = rect.top + OBJECT_SIZE;
 			pMap->SetRect(rect);
-			pMap->SetColor(COLORREF(RGB(0, 0, 0)));
+			if (rect.left >= nLeftEnd && rect.left < nRightEnd - OBJECT_SIZE && y > INTERVAL && y < 10) {
+				pMap->SetColor(COLORREF(RGB(255, 255, 255)));
+				CMap* pTempMap = dynamic_cast<CMap*>(pMap);
+				pTempMap->ChangeType();
+			}
+			else pMap->SetColor(COLORREF(RGB(0, 0, 0)));
 			m_GameList.push_back(pMap);
-			lSizeX += OBJECT_SIZE + 2;
+			lSizeX += OBJECT_SIZE + INTERVAL;
+		}
+
+		if (bTriangle && y > INTERVAL) {
+			nLeftEnd -= OBJECT_SIZE;
+			nRightEnd += OBJECT_SIZE;
+		}
+		else if(!bTriangle){
+			nLeftEnd += OBJECT_SIZE;
+			nRightEnd -= OBJECT_SIZE;
+		}
+
+		if (lSizeY == (OBJECT_SIZE + INTERVAL) * 5) {
+			nLeftEnd += OBJECT_SIZE;
+			nRightEnd -= OBJECT_SIZE;
+		}
+		if (lSizeY == (OBJECT_SIZE + INTERVAL) * 6) {
+			nLeftEnd += OBJECT_SIZE;
+			nRightEnd -= OBJECT_SIZE;
+			bTriangle = false;
+
 		}
 		lSizeX = 0;
-		lSizeY += OBJECT_SIZE + 2;
+		lSizeY += OBJECT_SIZE + INTERVAL;
 	}
+
+	// Player
+	pCharacter->SetPos(POINT{ ((MAP_SIZE_X / INTERVAL) * (OBJECT_SIZE + INTERVAL)) + (BSIZE + 5), ((MAP_SIZE_Y / INTERVAL) * (OBJECT_SIZE + INTERVAL)) + (90 + 5) });
+	rect.left = pCharacter->GetPos().x; rect.right = rect.left + CHARACTER_SIZE;
+	rect.top = pCharacter->GetPos().y; rect.bottom = rect.top + CHARACTER_SIZE;
+	pCharacter->SetRect(rect);
+	pCharacter->SetColor(RGB(0, 0, 0));
+	pPlayer->InitItem();
+	m_PlayerList.push_back(pCharacter);
+
 
 }

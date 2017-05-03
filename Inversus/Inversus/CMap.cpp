@@ -16,3 +16,8 @@ void CMap::Draw()
 
 
 }
+
+void CMap::ChangeType() { m_bIsBlack = !m_bIsBlack;}
+bool CMap::IsBlack() { return m_bIsBlack; }
+
+CMap::CMap() { m_bIsBlack = true; }
