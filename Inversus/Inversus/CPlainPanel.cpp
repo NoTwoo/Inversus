@@ -1,5 +1,8 @@
 #include "Define.h"
 
+const bool& CPlainPanel::IsLife() { return m_bIsLife; }
+void CPlainPanel::SetLife() { m_bIsLife = true; }
+
 bool CPlainPanel::GetDrawObject() { return m_bDrawObject; }
 void CPlainPanel::SetDrawObject(const bool& a_bDrawObject) { m_bDrawObject = a_bDrawObject; }
 
@@ -90,4 +93,5 @@ CPlainPanel::CPlainPanel()
 	m_stRotatingBullet[2].color = RGB(255, 255, 255); // WHITE
 	m_stRotatingBullet[3].color = RGB(189, 189, 189); // GRAY
 
+	m_bIsLife = false;
 }

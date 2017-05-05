@@ -23,7 +23,10 @@ void CPlayer::Draw()
 
 	}
 
-
+	if (ChkCollision()) {
+		m_uLife--;
+		GAMEMANAGER->DecreaseLife();
+	}
 	SelectObject(hdc, hOldBrush);
 	DeleteObject(hBrush);
 	ReleaseDC(GAMEMANAGER->getHWND(), hdc);
@@ -170,6 +173,18 @@ bool CPlayer::ChkCollision(const EMove& a_eMove)
 	return false;
 }
 
+bool CPlayer::ChkCollision()
+{
+
+	for (auto d : GAMEMANAGER->GetNPCList()) {
+		if (sqrt((((m_pos.x - d->GetPos().x) * (m_pos.x - d->GetPos().x)) +
+			((m_pos.y - d->GetPos().y) * (m_pos.y - d->GetPos().y)))) < CHARACTER_SIZE / 2) return true;
+
+	}
+
+	return false;
+}
+
 void CPlayer::RePositionBullet()
 {
 	for (auto d : m_vItemList) {
@@ -208,7 +223,7 @@ void CPlayer::InitItem()
 
 CPlayer::CPlayer()
 {
-	m_bytLife = 3;
+	m_uLife = 3;
 
 	// 그라데이션의 시작좌표를 명시한다.
 	m_vert[0].x = 0;

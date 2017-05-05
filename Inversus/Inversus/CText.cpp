@@ -2,6 +2,7 @@
 
 const std::string& CText::GetString() { return m_str; }
 void CText::SetString(const std::string& a_str) { m_str = a_str; }
+void CText::SetString(const CString& a_cstr) { m_cstr = a_cstr; }
 
 const STTextInfo& CText::GetPenInfo() { return m_stTextInfo; }
 void CText::SetTextInfo(const STTextInfo& a_stPenInfo) { m_stTextInfo = a_stPenInfo; }
@@ -22,8 +23,10 @@ void CText::Draw()
 
 	SetBkColor(hdc, m_color);
 	SetTextColor(hdc, m_stTextInfo.color);
-	DrawText(hdc, m_str.c_str(), m_str.length(), &m_rect, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
-
+	if(m_str.size() != 0)
+		DrawText(hdc, m_str.c_str(), m_str.length(), &m_rect, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
+	else
+		DrawText(hdc, m_cstr, m_cstr.GetLength(), &m_rect, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
 	SelectObject(hdc, hOldBrush);
 	SelectObject(hdc, hOldFont);
 	DeleteObject(hBrush);

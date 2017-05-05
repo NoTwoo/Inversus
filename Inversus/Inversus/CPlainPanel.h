@@ -5,6 +5,10 @@
 class CPlainPanel : public CPanel
 {
 public:
+	const bool& IsLife();
+	void SetLife();
+
+public:
 	bool GetDrawObject();
 	void SetDrawObject(const bool& a_bDrawObject);
 
@@ -35,4 +39,5 @@ private:
 	POINT m_CenterPos;
 	STRotatingBullet m_stRotatingBullet[4];
 	float m_flDR;
+	bool m_bIsLife;
 };

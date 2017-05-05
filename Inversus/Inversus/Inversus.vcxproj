@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="CActivePanel.cpp" />
     <ClCompile Include="CChracter.cpp" />
+    <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CMap.cpp" />

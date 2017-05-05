@@ -54,6 +54,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		GAMEMANAGER->Init(hWnd, g_hInst);
 		EnterIntroScene();
 		SetTimer(hWnd, 1, 50, TimerProc);
+		srand((unsigned)time(NULL));
+		SetTimer(hWnd, CREATE_NEW_NPC, CREATE_NEW_NPC_TIME, NULL);
+		break;
+	case WM_TIMER:
+		switch (wParam) {
+		case CREATE_NEW_NPC:
+			GAMEMANAGER->CreateNewNPC();
+			break;
+		}
 		break;
 	case WM_MOUSEMOVE:
 		GAMEMANAGER->SetMousePos(POINT{ LOWORD(lParam), HIWORD(lParam) });
@@ -178,10 +187,9 @@ void CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 	else {
 
 		for (CObject* d : GAMEMANAGER->GetGameList()) d->Draw();
-		for (CObject* d : GAMEMANAGER->GetPlayerList()) {
-			d->Draw();
-
-		}
+		for (CObject* d : GAMEMANAGER->GetPlayerList()) d->Draw();
+		for (CObject* d : GAMEMANAGER->GetNPCList()) d->Draw();
+		
 	}
 
 }

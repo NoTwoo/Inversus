@@ -11,7 +11,8 @@ public:
 	virtual void Move() = 0;
 	virtual void Attack() = 0;
 public:
-	const BYTE& GetLife();
+	const UINT& GetLife();
+	void DecreaseLife();
 
 public:
 	virtual bool ChkCollision();
@@ -20,5 +21,5 @@ public:
 	CCharacter();
 
 protected:
-	BYTE m_bytLife;
+	UINT  m_uLife;
 };

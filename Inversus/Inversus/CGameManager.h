@@ -21,7 +21,7 @@ public:
 	{
 		m_hWnd = a_hWnd;
 		m_hInst = a_hInst;
-
+		m_uScore = 0;
 		m_hdc = GetDC(m_hWnd);
 
 		GetClientRect(a_hWnd, &m_clntrt);
@@ -73,6 +73,18 @@ public:
 	void EnterInGameScene();
 	std::list<CObject*>& GetGameList() { return m_GameList; }
 	std::list<CObject*>& GetPlayerList() { return m_PlayerList; }
+	std::list<CObject*>& GetNPCList() { return m_NPCList; }
+
+public:
+	void IncreaseScore(const UINT& a_uScore);
+
+public:
+	void CreateNewNPC();
+
+public:
+	void DecreaseLife();
+	void DeleteNPC();
+
 private:
 	CGameManager() {};
 	CGameManager(const CGameManager&) = delete;
@@ -86,6 +98,7 @@ private:
 	std::list<CObject*> m_IntroList;
 	std::list<CObject*> m_GameList;
 	std::list<CObject*> m_PlayerList;
+	std::list<CObject*> m_NPCList;
 private:
 	HWND m_hWnd;
 	HDC m_hdc;

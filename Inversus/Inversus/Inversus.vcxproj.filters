@@ -90,6 +90,9 @@
     <ClCompile Include="CRotatingBullet.cpp">
       <Filter>Game\Obj\Item\Bullet\RotatingBullet</Filter>
     </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>Game\Obj\Character\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CObject.h">

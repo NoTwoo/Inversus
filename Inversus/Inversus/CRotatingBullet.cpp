@@ -32,6 +32,9 @@ void CRotatingBullet::ChkCollision()
 					&& cMap->IsBlack()) {
 					cMap->ChangeType();
 					cMap->SetColor(RGB(255, 255, 255));
+
+					GAMEMANAGER->IncreaseScore(KILL_POINT);
+
 				}
 
 				else if (sqrt(((m_stBulletAnimation.vert[0].x - cMap->GetPos().x)
@@ -42,6 +45,7 @@ void CRotatingBullet::ChkCollision()
 					&& cMap->IsBlack()) {
 					cMap->ChangeType();
 					cMap->SetColor(RGB(255, 255, 255));
+					GAMEMANAGER->IncreaseScore(KILL_POINT);
 				}
 			}
 
@@ -55,6 +59,8 @@ void CRotatingBullet::ChkCollision()
 					&& cMap->IsBlack()) {
 					cMap->ChangeType();
 					cMap->SetColor(RGB(255, 255, 255));
+					GAMEMANAGER->IncreaseScore(KILL_POINT);
+					
 				}
 
 				else if (sqrt(((m_stBulletAnimation.vert[1].x - cMap->GetPos().x)
@@ -65,6 +71,7 @@ void CRotatingBullet::ChkCollision()
 					&& cMap->IsBlack()) {
 					cMap->ChangeType();
 					cMap->SetColor(RGB(255, 255, 255));
+					GAMEMANAGER->IncreaseScore(KILL_POINT);
 				}
 
 			}
@@ -77,6 +84,7 @@ void CRotatingBullet::ChkCollision()
 					&& cMap->IsBlack()) {
 					cMap->ChangeType();
 					cMap->SetColor(RGB(255, 255, 255));
+					GAMEMANAGER->IncreaseScore(KILL_POINT);
 				}
 
 				else if (sqrt(((m_stBulletAnimation.vert[1].x - cMap->GetPos().x)
@@ -87,8 +95,25 @@ void CRotatingBullet::ChkCollision()
 					&& cMap->IsBlack()) {
 					cMap->ChangeType();
 					cMap->SetColor(RGB(255, 255, 255));
+					GAMEMANAGER->IncreaseScore(KILL_POINT);
+
 				}
 			}
+		}
+	}
+
+	for (auto d : GAMEMANAGER->GetNPCList()) {
+		if (m_stBulletAnimation.a_eAttack == EAttack::LEFT_ATTACK || m_stBulletAnimation.a_eAttack == EAttack::RIGHT_ATTACK) {
+				CEnemy* cEnemy = dynamic_cast<CEnemy*>(d);
+				if (sqrt(((m_stBulletAnimation.vert[1].x - d->GetPos().x)
+					* (m_stBulletAnimation.vert[1].x - d->GetPos().x) +
+					((m_stBulletAnimation.vert[1].y - (m_stBulletAnimation.vert[1].y - m_stBulletAnimation.vert[0].y)) - d->GetPos().y)
+					* (
+					(m_stBulletAnimation.vert[1].y - (m_stBulletAnimation.vert[1].y - m_stBulletAnimation.vert[0].y)) - d->GetPos().y))) < 28
+					) {
+					cEnemy->DecreaseLife(); GAMEMANAGER->IncreaseScore(NPC_KILL_POINT); break;
+				}
+				
 		}
 	}
 }

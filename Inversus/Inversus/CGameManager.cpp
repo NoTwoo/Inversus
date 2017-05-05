@@ -96,6 +96,8 @@ void CGameManager::EnterInGameScene()
 		pObject->SetRect(rect);
 		pObject->SetColor(COLORREF(RGB(0, 0, 0)));
 
+		CPlainPanel* pPanel = dynamic_cast<CPlainPanel*>(pObject);
+		pPanel->SetLife();
 		m_GameList.push_back(pObject);
 
 		uXSize += BSIZE + 20;
@@ -113,11 +115,28 @@ void CGameManager::EnterInGameScene()
 	stTextInfo.color = RGB(0, 0, 0);
 	stTextInfo.width = SMALL_TEXT_WIDTH;
 	pText2->SetTextInfo(stTextInfo);
-	pText2->SetString("Score");
+	std::string str = "Score";
+	pText2->SetString(str);
 
 	m_GameList.push_back(pText);
 
+	// Score Point
+	pText = new CText;
+	pText->SetPos(POINT{ BSIZE + BSIZE / 2, BSIZE});
+	rect.left = pText->GetPos().x; rect.right = GAMEMANAGER->GetRect().right;
+	rect.top = pText->GetPos().y; rect.bottom = rect.top + OBJECT_SIZE;
+	pText->SetRect(rect);
+	pText->SetColor(RGB(255, 255, 255));
 
+	pText2 = dynamic_cast<CText*>(pText);
+	stTextInfo.color = RGB(92, 209, 229);
+	stTextInfo.width = SMALL_TEXT_WIDTH;
+	pText2->SetTextInfo(stTextInfo);
+	CString cstr;
+	cstr.Format("%d", GAMEMANAGER->GetScore());
+	pText2->SetString(cstr);
+
+	m_GameList.push_back(pText);
 	// Map
 	LONG lSizeX{}, lSizeY{};
 
@@ -177,3 +196,65 @@ void CGameManager::EnterInGameScene()
 
 
 }
+
+void  CGameManager::IncreaseScore(const UINT& a_uScore)
+{
+	m_uScore += a_uScore; 
+
+	for (CObject* d : GAMEMANAGER->GetGameList()) {
+		if (dynamic_cast<CText*>(d)) {
+			CText* cText = dynamic_cast<CText*>(d);
+			if (cText->GetString().size() == 0) {
+				CString cstr;
+				cstr.Format("%d", GAMEMANAGER->GetScore());
+				cText->SetString(cstr);
+			}
+		}
+	}
+}
+
+void CGameManager::CreateNewNPC()
+{
+	CObject* cEnemy = new CEnemy;
+	cEnemy->SetPos(POINT{ rand() % (WINDOWS_SIZE_X - 100) + 100, rand() % (WINDOWS_SIZE_Y - 100) + 100});
+	RECT rect;
+	rect.left = cEnemy->GetPos().x; rect.right = rect.left + CHARACTER_SIZE;
+	rect.top = cEnemy->GetPos().y; rect.bottom = rect.top + CHARACTER_SIZE;
+	cEnemy->SetRect(rect);
+	cEnemy->SetColor(RGB(rand() % 255, rand() % 255, rand() % 255));
+	m_NPCList.push_back(cEnemy);
+
+}
+
+void CGameManager::DecreaseLife()
+{
+	if (m_GameList.size() > 0) {
+		for (list<CObject*>::iterator itor = m_GameList.begin(); itor != m_GameList.end();) {
+			if (dynamic_cast<CPlainPanel*>(*itor)) {
+				CPlainPanel* cPanel = dynamic_cast<CPlainPanel*>(*itor);
+				if (cPanel->IsLife()) { itor = m_GameList.erase(itor); InvalidateRect(m_hWnd, NULL, TRUE); }
+				else ++itor;
+			}
+			else ++itor;
+
+		}
+
+	}
+}
+
+void CGameManager::DeleteNPC()
+{
+	if (m_NPCList.size() > 0) {
+		for (list<CObject*>::iterator itor = m_NPCList.begin(); itor != m_NPCList.end();) {
+			if (dynamic_cast<CEnemy*>(*itor)) {
+				CEnemy* cEnemy = dynamic_cast<CEnemy*>(*itor);
+				if (cEnemy->GetLife() != 1) { itor = m_NPCList.erase(itor); }
+				else  ++itor;
+				
+			}
+
+		}
+
+	}
+}
+

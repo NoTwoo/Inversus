@@ -19,7 +19,8 @@ public:
 	void Shoot(const EAttack& a_eAttack);
 	void ReloadBullet();
 public:
-	bool ChkCollision(const EMove& a_eMove) ;
+	bool ChkCollision(const EMove& a_eMove);
+	bool ChkCollision();
 
 public:
 	void InitItem();

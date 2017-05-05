@@ -2,7 +2,7 @@
 
 #include <Windows.h>
 #include <string>
-
+#include <atlstr.h>
 enum EItemType { Nothing, PlainBullet, SpecialBullet };
 
 struct STTextInfo

@@ -1,14 +1,10 @@
 #include "Define.h"
 
-const BYTE& CCharacter::GetLife() { return m_bytLife; }
+const UINT& CCharacter::GetLife() { return  m_uLife; }
+void CCharacter::DecreaseLife() { m_uLife--; GAMEMANAGER->DeleteNPC(); }
 
 bool CCharacter::ChkCollision(){ return false; }
 
 
 
-CCharacter::CCharacter()
-{
-
-	BYTE m_bytLife = 1;
-
-}
+CCharacter::CCharacter(){ m_uLife = 1; }
