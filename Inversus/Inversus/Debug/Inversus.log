@@ -1,3 +1,5 @@
-﻿  CPlayer.cpp
+﻿  CRotatingBullet.cpp
+s:\kpu\4-1\apiproject\inversus\inversus\inversus\crotatingbullet.cpp(8): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+s:\kpu\4-1\apiproject\inversus\inversus\inversus\crotatingbullet.cpp(124): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Inversus.vcxproj -> S:\KPU\4-1\APIProject\Inversus\Inversus\Debug\Inversus.exe
   Inversus.vcxproj -> S:\KPU\4-1\APIProject\Inversus\Inversus\Debug\Inversus.pdb (Partial PDB)

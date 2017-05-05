@@ -86,7 +86,6 @@ void CGameManager::EnterInGameScene()
 	CObject* pCharacter = new CPlayer;
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(pCharacter);
 
-
 	LONG uXSize{}, uYSize{ 50 };
 
 	for (int i = 0; i < pPlayer->GetLife() -1; ++i) {

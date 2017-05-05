@@ -1,7 +1,6 @@
 #pragma once
 
 #include<vector>
-
 #include "CCharacter.h"
 
 class CPlayer : public CCharacter
@@ -17,7 +16,8 @@ public:
 public:
 	virtual void Attack() override {};
 	void Attack(const EAttack& a_eAttack);
-
+	void Shoot(const EAttack& a_eAttack);
+	void ReloadBullet();
 public:
 	bool ChkCollision(const EMove& a_eMove) ;
 
@@ -29,5 +29,7 @@ public:
 
 private:
 	std::vector<CObject*> m_vItemList;
-	
+	TRIVERTEX m_vert[2];
+	GRADIENT_RECT m_grect;
+	bool m_bShootAnimation;
 };

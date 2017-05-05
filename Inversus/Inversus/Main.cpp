@@ -68,6 +68,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case 'p':
 		case 'P':
 			break;
+		case 'r':
+		case 'R':
+			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+				pPlayer->ReloadBullet();
+			}
+			break;
 		case 'w':
 		case 'W':
 			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
@@ -171,7 +178,10 @@ void CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 	else {
 
 		for (CObject* d : GAMEMANAGER->GetGameList()) d->Draw();
-		for (CObject* d : GAMEMANAGER->GetPlayerList()) d->Draw();
+		for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+			d->Draw();
+
+		}
 	}
 
 }

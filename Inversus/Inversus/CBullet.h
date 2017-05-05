@@ -5,6 +5,9 @@ class CBullet : public CObject
 {
 
 public:
+	virtual void ChkCollision();
+
+public:
 	CBullet();
 
 protected:
