@@ -55,7 +55,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		EnterIntroScene();
 		SetTimer(hWnd, 1, 50, TimerProc);
 		srand((unsigned)time(NULL));
-		SetTimer(hWnd, CREATE_NEW_NPC, CREATE_NEW_NPC_TIME, NULL);
 		break;
 	case WM_TIMER:
 		switch (wParam) {
@@ -166,6 +165,7 @@ void CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 {
 
 	if (!GAMEMANAGER->IsInGame()) {
+
 		for (CObject* d : GAMEMANAGER->GetIntroList()) {
 			if (dynamic_cast<CPanel*>(d)) {
 				CPanel* tempPanel = dynamic_cast<CPanel*>(d);
@@ -185,10 +185,11 @@ void CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 	}
 
 	else {
-
+		
 		for (CObject* d : GAMEMANAGER->GetGameList()) d->Draw();
-		for (CObject* d : GAMEMANAGER->GetPlayerList()) d->Draw();
 		for (CObject* d : GAMEMANAGER->GetNPCList()) d->Draw();
+		for (CObject* d : GAMEMANAGER->GetPlayerList()) d->Draw();
+		GAMEMANAGER->DeleteNPC();
 		
 	}
 

@@ -46,6 +46,7 @@ using namespace std;
 #define MAX_BULLET 5
 
 #define SMALL_BULLET_SIZE 3
+#define MEMIUM_BULLET_SIZE 5
 
 #define KILL_POINT 5
 #define NPC_KILL_POINT 10
@@ -53,3 +54,6 @@ using namespace std;
 enum { CREATE_NEW_NPC = 2 };
 #define CREATE_NEW_NPC_TIME 3000
 #define NPC_MOVE_POINT 5
+
+#define MAX_AURA_X 3
+#define MAX_AURA_Y 3

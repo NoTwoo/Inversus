@@ -60,7 +60,9 @@ void CGameManager::ClickProcess()
 			CActivePanel* ActivePanel = dynamic_cast<CActivePanel*>(d);
 			if (ActivePanel->ChkClick()) {
 				switch (ActivePanel->GetType()) {
-				case EType::NEW_GAME: m_bIsInGame = true; EnterInGameScene(); InvalidateRect(m_hWnd, NULL, TRUE); break;
+				case EType::NEW_GAME:
+				if(m_PlayerList.size() != 0) m_PlayerList.clear(); 
+				m_bIsInGame = true; EnterInGameScene(); InvalidateRect(m_hWnd, NULL, TRUE); break;
 				case EType::HELP: ShowManual(); break;
 				case EType::EXIT: PostQuitMessage(0); break;
 				}
@@ -186,15 +188,10 @@ void CGameManager::EnterInGameScene()
 	}
 
 	// Player
-	pCharacter->SetPos(POINT{ ((MAP_SIZE_X / INTERVAL) * (OBJECT_SIZE + INTERVAL)) + (BSIZE + 5), ((MAP_SIZE_Y / INTERVAL) * (OBJECT_SIZE + INTERVAL)) + (90 + 5) });
-	rect.left = pCharacter->GetPos().x; rect.right = rect.left + CHARACTER_SIZE;
-	rect.top = pCharacter->GetPos().y; rect.bottom = rect.top + CHARACTER_SIZE;
-	pCharacter->SetRect(rect);
-	pCharacter->SetColor(RGB(0, 0, 0));
-	pPlayer->InitItem();
+	pPlayer->Init();
 	m_PlayerList.push_back(pCharacter);
 
-
+	SetTimer(m_hWnd, CREATE_NEW_NPC, CREATE_NEW_NPC_TIME, NULL);
 }
 
 void  CGameManager::IncreaseScore(const UINT& a_uScore)
@@ -232,7 +229,13 @@ void CGameManager::DecreaseLife()
 		for (list<CObject*>::iterator itor = m_GameList.begin(); itor != m_GameList.end();) {
 			if (dynamic_cast<CPlainPanel*>(*itor)) {
 				CPlainPanel* cPanel = dynamic_cast<CPlainPanel*>(*itor);
-				if (cPanel->IsLife()) { itor = m_GameList.erase(itor); InvalidateRect(m_hWnd, NULL, TRUE); }
+				if (cPanel->IsLife()) { 
+					for (auto d : m_PlayerList) {
+						CCharacter* cCha = dynamic_cast<CCharacter*>(d);
+						cCha->Explode();
+					}
+					itor = m_GameList.erase(itor); InvalidateRect(m_hWnd, NULL, TRUE); break;
+				}
 				else ++itor;
 			}
 			else ++itor;
@@ -245,12 +248,33 @@ void CGameManager::DecreaseLife()
 void CGameManager::DeleteNPC()
 {
 	if (m_NPCList.size() > 0) {
+		for (list<CObject*>::iterator itor = m_NPCList.begin(); itor != m_NPCList.end(); ++itor) {
+			if (dynamic_cast<CEnemy*>(*itor)) {
+				CEnemy* cEnemy = dynamic_cast<CEnemy*>(*itor);
+				if (cEnemy->GetLife() != 1 && !cEnemy->GetDelete() && !cEnemy->GetExplosion()) { cEnemy->Explode(); }
+				
+			}
+
+		}
+
+	}
+
+	if (m_NPCList.size() > 0) {
 		for (list<CObject*>::iterator itor = m_NPCList.begin(); itor != m_NPCList.end();) {
 			if (dynamic_cast<CEnemy*>(*itor)) {
 				CEnemy* cEnemy = dynamic_cast<CEnemy*>(*itor);
-				if (cEnemy->GetLife() != 1) { itor = m_NPCList.erase(itor); }
+				if (cEnemy->GetDelete()) {
+					if (rand() % 2) {
+						CObject* pBullet = new CBullet;
+						pBullet->SetColor(cEnemy->GetColor());
+						pBullet->SetPos(cEnemy->GetPos());
+						pBullet->SetRect(cEnemy->GetRect());
+						m_GameList.push_back(pBullet);
+					}
+					itor = m_NPCList.erase(itor); 
+				}
 				else  ++itor;
-				
+
 			}
 
 		}
@@ -258,3 +282,15 @@ void CGameManager::DeleteNPC()
 	}
 }
 
+void  CGameManager::SetInGame(bool const& a_bool)
+{
+	m_bIsInGame = a_bool;
+	if (!m_bIsInGame) {
+		KillTimer(m_hWnd, CREATE_NEW_NPC);
+		m_GameList.clear();
+		m_NPCList.clear();
+		m_uScore = 0;
+		InvalidateRect(m_hWnd, NULL, TRUE);
+
+	}
+}

@@ -9,6 +9,7 @@ void CPlayer::Draw()
 	hBrush = CreateSolidBrush(m_color);
 	hOldBrush = (HBRUSH)SelectObject(hdc, hBrush);
 
+	if(!m_bDrawExplosion)
 	RoundRect(hdc, m_rect.left, m_rect.top, m_rect.right, m_rect.bottom, 10, 10);
 
 	if (m_vItemList.size() > 0) {
@@ -26,6 +27,15 @@ void CPlayer::Draw()
 	if (ChkCollision()) {
 		m_uLife--;
 		GAMEMANAGER->DecreaseLife();
+		if (m_uLife == 0) {
+			GAMEMANAGER->SetInGame(false);
+			return;
+		}
+	}
+	if (m_bDrawExplosion) {
+		Ellipse(hdc, m_pos.x - m_bytBSIZE, m_pos.y - m_bytBSIZE, m_pos.x + m_bytBSIZE, m_pos.y + m_bytBSIZE);
+		if (m_bytBSIZE < BSIZE) m_bytBSIZE += 5;
+		else Init();
 	}
 	SelectObject(hdc, hOldBrush);
 	DeleteObject(hBrush);
@@ -177,8 +187,9 @@ bool CPlayer::ChkCollision()
 {
 
 	for (auto d : GAMEMANAGER->GetNPCList()) {
-		if (sqrt((((m_pos.x - d->GetPos().x) * (m_pos.x - d->GetPos().x)) +
-			((m_pos.y - d->GetPos().y) * (m_pos.y - d->GetPos().y)))) < CHARACTER_SIZE / 2) return true;
+		CEnemy* cEnemy = dynamic_cast<CEnemy*>(d);
+		if (sqrt((((m_pos.x - cEnemy->GetPos().x) * (m_pos.x - cEnemy->GetPos().x)) +
+			((m_pos.y - cEnemy->GetPos().y) * (m_pos.y - cEnemy->GetPos().y)))) < CHARACTER_SIZE / 2 && !cEnemy->GetExplosion()) return true;
 
 	}
 
@@ -195,9 +206,22 @@ void CPlayer::RePositionBullet()
 
 }
 
+void CPlayer::Init()
+{
+	m_pos.x = ((MAP_SIZE_X / INTERVAL) * (OBJECT_SIZE + INTERVAL)) + (BSIZE + 5);
+	m_pos.y = ((MAP_SIZE_Y / INTERVAL) * (OBJECT_SIZE + INTERVAL)) + (90 + 5);
+	m_rect.left = m_pos.x; m_rect.right = m_rect.left + CHARACTER_SIZE;
+	m_rect.top = m_pos.y; m_rect.bottom = m_rect.top + CHARACTER_SIZE;
+	m_color = RGB(0, 0, 0);
+	m_bDrawExplosion = false;
+	m_bytBSIZE = BSIZE / 3;
+	InitItem();
+}
+
 void CPlayer::InitItem()
 {
-
+	if (m_vItemList.size() > 0) m_vItemList.clear();
+	
 	float Angle = 0.0f;
 	for (int i = 0; i < MAX_BULLET; ++i) {
 
@@ -251,3 +275,4 @@ CPlayer::CPlayer()
 	m_bShootAnimation = false;
 
 }
+

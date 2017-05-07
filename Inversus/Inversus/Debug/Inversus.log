@@ -1,23 +1,4 @@
-﻿  CRotatingBullet.cpp
-s:\kpu\4-1\apiproject\inversus\inversus\inversus\crotatingbullet.cpp(8): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-s:\kpu\4-1\apiproject\inversus\inversus\inversus\crotatingbullet.cpp(149): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  CGameManager.cpp
+﻿  CGameManager.cpp
 s:\kpu\4-1\apiproject\inversus\inversus\inversus\cgamemanager.cpp(91): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Compiling...
-  Main.cpp
-  CText.cpp
-  CPlayer.cpp
-  CPlainPanel.cpp
-  CPanel.cpp
-  CObject.cpp
-  CMap.cpp
-  CEnemy.cpp
-  CChracter.cpp
-  CBullet.cpp
-  CActivePanel.cpp
-  Generating Code...
-s:\kpu\4-1\apiproject\inversus\inversus\inversus\cactivepanel.cpp(19): warning C4172: returning address of local variable or temporary
-s:\kpu\4-1\apiproject\inversus\inversus\inversus\cactivepanel.cpp(20): warning C4172: returning address of local variable or temporary
   Inversus.vcxproj -> S:\KPU\4-1\APIProject\Inversus\Inversus\Debug\Inversus.exe
   Inversus.vcxproj -> S:\KPU\4-1\APIProject\Inversus\Inversus\Debug\Inversus.pdb (Partial PDB)

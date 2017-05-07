@@ -2,7 +2,6 @@
 
 #include <list>
 #include "CObject.h"
-
 #define MAP_SIZE_X 19
 #define MAP_SIZE_Y 13
 
@@ -68,8 +67,8 @@ public:
 	void SetHelpOn();
 
 public:
-	const bool& IsInGame() { return m_bIsInGame; }
-	void SetInGame(bool const& a_bool) { m_bIsInGame = a_bool; }
+	const bool& IsInGame() { return m_bIsInGame;}
+	void SetInGame(bool const& a_bool);
 	void EnterInGameScene();
 	std::list<CObject*>& GetGameList() { return m_GameList; }
 	std::list<CObject*>& GetPlayerList() { return m_PlayerList; }
@@ -99,6 +98,7 @@ private:
 	std::list<CObject*> m_GameList;
 	std::list<CObject*> m_PlayerList;
 	std::list<CObject*> m_NPCList;
+
 private:
 	HWND m_hWnd;
 	HDC m_hdc;

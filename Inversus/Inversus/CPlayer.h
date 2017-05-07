@@ -23,6 +23,7 @@ public:
 	bool ChkCollision();
 
 public:
+	void Init();
 	void InitItem();
 
 public:

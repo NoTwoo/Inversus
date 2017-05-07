@@ -8,6 +8,9 @@ public:
 	virtual void ChkCollision();
 
 public:
+	virtual void Draw();
+
+public:
 	CBullet();
 
 protected:

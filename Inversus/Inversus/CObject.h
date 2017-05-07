@@ -42,7 +42,7 @@ public:
 	const COLORREF& GetColor();
 	void SetColor(const COLORREF& a_color);
 
-	POINT GetPos();
+	POINT GetPos() const;
 	void SetPos(POINT a_pos);
 
 	const RECT& GetRect();

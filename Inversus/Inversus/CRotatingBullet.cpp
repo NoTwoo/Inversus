@@ -103,8 +103,8 @@ void CRotatingBullet::ChkCollision()
 	}
 
 	for (auto d : GAMEMANAGER->GetNPCList()) {
+		CEnemy* cEnemy = dynamic_cast<CEnemy*>(d);
 		if (m_stBulletAnimation.a_eAttack == EAttack::LEFT_ATTACK || m_stBulletAnimation.a_eAttack == EAttack::RIGHT_ATTACK) {
-				CEnemy* cEnemy = dynamic_cast<CEnemy*>(d);
 				if (sqrt(((m_stBulletAnimation.vert[1].x - d->GetPos().x)
 					* (m_stBulletAnimation.vert[1].x - d->GetPos().x) +
 					((m_stBulletAnimation.vert[1].y - (m_stBulletAnimation.vert[1].y - m_stBulletAnimation.vert[0].y)) - d->GetPos().y)
@@ -113,7 +113,57 @@ void CRotatingBullet::ChkCollision()
 					) {
 					cEnemy->DecreaseLife(); GAMEMANAGER->IncreaseScore(NPC_KILL_POINT); break;
 				}
+				else if (sqrt(((m_stBulletAnimation.vert[0].x - d->GetPos().x)
+					* (m_stBulletAnimation.vert[0].x - d->GetPos().x) +
+					((m_stBulletAnimation.vert[1].y - (m_stBulletAnimation.vert[1].y - m_stBulletAnimation.vert[0].y)) - d->GetPos().y)
+					* (
+					(m_stBulletAnimation.vert[1].y - (m_stBulletAnimation.vert[1].y - m_stBulletAnimation.vert[0].y)) - d->GetPos().y))) < 28
+					) {
+					cEnemy->DecreaseLife(); GAMEMANAGER->IncreaseScore(NPC_KILL_POINT); break;
+				}
 				
+		}
+		else if (m_stBulletAnimation.a_eAttack == EAttack::UP_ATTACK) {
+
+			if (sqrt(((m_stBulletAnimation.vert[1].x - d->GetPos().x)
+				* (m_stBulletAnimation.vert[1].x - d->GetPos().x) +
+				((m_stBulletAnimation.vert[0].y - (m_stBulletAnimation.vert[0].y - m_stBulletAnimation.vert[1].y)) - d->GetPos().y)
+				* (
+				(m_stBulletAnimation.vert[0].y - (m_stBulletAnimation.vert[0].y - m_stBulletAnimation.vert[1].y)) - d->GetPos().y))) < 25
+				) {
+				cEnemy->DecreaseLife(); GAMEMANAGER->IncreaseScore(NPC_KILL_POINT); break;
+
+			}
+
+			else if (sqrt(((m_stBulletAnimation.vert[1].x - d->GetPos().x)
+				* (m_stBulletAnimation.vert[1].x - d->GetPos().x) +
+				((m_stBulletAnimation.vert[1].y - (m_stBulletAnimation.vert[1].y - m_stBulletAnimation.vert[0].y)) - d->GetPos().y)
+				* (
+				(m_stBulletAnimation.vert[1].y - (m_stBulletAnimation.vert[1].y - m_stBulletAnimation.vert[0].y)) - d->GetPos().y))) < 25
+				) {
+				cEnemy->DecreaseLife(); GAMEMANAGER->IncreaseScore(NPC_KILL_POINT); break;
+			}
+
+		}
+		else if (m_stBulletAnimation.a_eAttack == EAttack::DOWN_ATTACK) {
+			if (sqrt(((m_stBulletAnimation.vert[1].x - d->GetPos().x)
+				* (m_stBulletAnimation.vert[1].x - d->GetPos().x) +
+				((m_stBulletAnimation.vert[0].y - (m_stBulletAnimation.vert[0].y - m_stBulletAnimation.vert[1].y)) - d->GetPos().y)
+				* (
+				(m_stBulletAnimation.vert[0].y - (m_stBulletAnimation.vert[0].y - m_stBulletAnimation.vert[1].y)) - d->GetPos().y))) < 28
+				) {
+				cEnemy->DecreaseLife(); GAMEMANAGER->IncreaseScore(NPC_KILL_POINT); break;
+			}
+
+			else if (sqrt(((m_stBulletAnimation.vert[1].x - d->GetPos().x)
+				* (m_stBulletAnimation.vert[1].x - d->GetPos().x) +
+				((m_stBulletAnimation.vert[1].y - (m_stBulletAnimation.vert[1].y - m_stBulletAnimation.vert[0].y)) - d->GetPos().y)
+				* (
+				(m_stBulletAnimation.vert[1].y - (m_stBulletAnimation.vert[1].y - m_stBulletAnimation.vert[0].y)) - d->GetPos().y))) < 28
+				) {
+				cEnemy->DecreaseLife(); GAMEMANAGER->IncreaseScore(NPC_KILL_POINT); break;
+
+			}
 		}
 	}
 }
