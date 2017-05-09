@@ -25,11 +25,13 @@ void CPlayer::Draw()
 	}
 
 	if (ChkCollision()) {
-		m_uLife--;
-		GAMEMANAGER->DecreaseLife();
-		if (m_uLife == 0) {
-			GAMEMANAGER->SetInGame(false);
-			return;
+		if (!GAMEMANAGER->GetInvincibility()) {
+			m_uLife--;
+			GAMEMANAGER->DecreaseLife();
+			if (m_uLife == 0) {
+				GAMEMANAGER->SetInGame(false);
+				return;
+			}
 		}
 	}
 	if (m_bDrawExplosion) {
@@ -127,10 +129,50 @@ void CPlayer::ReloadBullet()
 
 }
 
+void CPlayer::ReloadBullet(CObject* a_CObject)
+{
+
+	CBullet* pBullet = dynamic_cast<CBullet*>(a_CObject);
+	if (m_vItemList.size() < MAX_BULLET && m_vItemList.size() != 0) {
+		vector<CObject*>::iterator itor = m_vItemList.begin();
+
+		CRotatingBullet* LastBullet = dynamic_cast<CRotatingBullet*>(*itor);
+		CObject* pNewBullet = new CRotatingBullet;
+
+		pNewBullet->SetColor(pBullet->GetColor());
+		pNewBullet->SetRect(m_rect);
+		CRotatingBullet* pRotatingBullet = dynamic_cast<CRotatingBullet*>(pNewBullet);
+		pRotatingBullet->SetCenter();
+		pRotatingBullet->SetAngle(LastBullet->GetAngle());
+
+		m_vItemList.push_back(pNewBullet);
+	}
+	else if (m_vItemList.size() != 0) {
+		vector<CObject*>::iterator itor = m_vItemList.begin();
+		CBullet* Bullet = dynamic_cast<CBullet*>(*itor);
+		Bullet->SetColor(pBullet->GetColor());
+	}
+
+	else {
+		CObject* pBullet = new CRotatingBullet;
+
+		pBullet->SetColor(pBullet->GetColor());
+		pBullet->SetRect(m_rect);
+		CRotatingBullet* pRotatingBullet = dynamic_cast<CRotatingBullet*>(pBullet);
+		pRotatingBullet->SetCenter();
+
+		pRotatingBullet->SetAngle(0.0f);
+
+		m_vItemList.push_back(pBullet);
+	}
+}
+
 bool CPlayer::ChkCollision(const EMove& a_eMove)
 {
 	switch (a_eMove) {
 	case EMove::UP:
+		if (m_pos.y == UP_END) return true;
+
 		for (auto d : GAMEMANAGER->GetGameList()) {
 			if (dynamic_cast<CMap*>(d)) {
 				CMap* cMap = dynamic_cast<CMap*>(d);
@@ -140,9 +182,21 @@ bool CPlayer::ChkCollision(const EMove& a_eMove)
 						return true;
 				}
 			}
+			if (dynamic_cast<CBullet*>(d)) {
+				CBullet* pBullet = dynamic_cast<CBullet*>(d);
+				if (sqrt((((m_pos.x - pBullet->GetPos().x) * (m_pos.x - pBullet->GetPos().x)) +
+					((m_pos.y - pBullet->GetPos().y) * (m_pos.y - pBullet->GetPos().y)))) < OBJECT_SIZE) {
+					ReloadBullet(d);
+					pBullet->DeleteMe();
+					
+				}
+			}
 		}
+
 		break;
 	case EMove::DOWN:
+		if (m_pos.y == BOTTOM_END) return true;
+
 		for (auto d : GAMEMANAGER->GetGameList()) {
 			if (dynamic_cast<CMap*>(d)) {
 				CMap* cMap = dynamic_cast<CMap*>(d);
@@ -152,9 +206,20 @@ bool CPlayer::ChkCollision(const EMove& a_eMove)
 						return true;
 				}
 			}
+			if (dynamic_cast<CBullet*>(d)) {
+				CBullet* pBullet = dynamic_cast<CBullet*>(d);
+				if (sqrt((((m_pos.x - pBullet->GetPos().x) * (m_pos.x - pBullet->GetPos().x)) +
+					((m_pos.y - pBullet->GetPos().y) * (m_pos.y - pBullet->GetPos().y)))) < OBJECT_SIZE) {
+					ReloadBullet(d);
+					pBullet->DeleteMe();
+				
+				}
+			}
 		}
 		break;
 	case EMove::LEFT:
+		if (m_pos.x == LEFT_END) return true;
+
 		for (auto d : GAMEMANAGER->GetGameList()) {
 			if (dynamic_cast<CMap*>(d)) {
 				CMap* cMap = dynamic_cast<CMap*>(d);
@@ -164,9 +229,20 @@ bool CPlayer::ChkCollision(const EMove& a_eMove)
 						return true;
 				}
 			}
+			if (dynamic_cast<CBullet*>(d)) {
+				CBullet* pBullet = dynamic_cast<CBullet*>(d);
+				if (sqrt((((m_pos.x - pBullet->GetPos().x) * (m_pos.x - pBullet->GetPos().x)) +
+					((m_pos.y - pBullet->GetPos().y) * (m_pos.y - pBullet->GetPos().y)))) < OBJECT_SIZE) {
+					ReloadBullet(d);
+					pBullet->DeleteMe();
+			
+				}
+			}
 		}
 		break;
 	case EMove::RIGHT:
+		if (m_pos.x == RIGHT_END) return true;
+
 		for (auto d : GAMEMANAGER->GetGameList()) {
 			if (dynamic_cast<CMap*>(d)) {
 				CMap* cMap = dynamic_cast<CMap*>(d);
@@ -174,6 +250,14 @@ bool CPlayer::ChkCollision(const EMove& a_eMove)
 					if ((m_rect.left / (OBJECT_SIZE + INTERVAL)) + 1 == cMap->GetRect().left / (OBJECT_SIZE + INTERVAL)
 						&& (m_rect.top / (OBJECT_SIZE + INTERVAL)) == cMap->GetRect().top / (OBJECT_SIZE + INTERVAL))
 						return true;
+				}
+			}
+			if (dynamic_cast<CBullet*>(d)) {
+				CBullet* pBullet = dynamic_cast<CBullet*>(d);
+				if (sqrt((((m_pos.x - pBullet->GetPos().x) * (m_pos.x - pBullet->GetPos().x)) +
+					((m_pos.y - pBullet->GetPos().y) * (m_pos.y - pBullet->GetPos().y)))) < OBJECT_SIZE) {
+					ReloadBullet(d);
+					pBullet->DeleteMe();
 				}
 			}
 		}
@@ -244,6 +328,7 @@ void CPlayer::InitItem()
 	m_vert[1].y = m_vert[0].y + (CHARACTER_SIZE / 3);
 
 }
+
 
 CPlayer::CPlayer()
 {

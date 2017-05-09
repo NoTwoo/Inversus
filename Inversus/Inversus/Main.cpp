@@ -1,7 +1,7 @@
 #include "Define.h"
 #include "resource.h"
 
-#pragma comment(linker , "/entry:WinMainCRTStartup /subsystem:console")
+//#pragma comment(linker , "/entry:WinMainCRTStartup /subsystem:console")
 
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = "INVERSUS";
@@ -67,49 +67,68 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		GAMEMANAGER->SetMousePos(POINT{ LOWORD(lParam), HIWORD(lParam) });
 		break;
 	case WM_LBUTTONDOWN:
-		if (GAMEMANAGER->IsHelpOn()) { SetTimer(hWnd, 1, 50, TimerProc); GAMEMANAGER->SetHelpOn(); }
-		GAMEMANAGER->SetMousePos(POINT{ LOWORD(lParam), HIWORD(lParam) });
-		GAMEMANAGER->ClickProcess();
+		if (!GAMEMANAGER->IsInGame()) {
+			if (GAMEMANAGER->IsHelpOn()) { SetTimer(hWnd, 1, 50, TimerProc); GAMEMANAGER->SetHelpOn(); }
+			GAMEMANAGER->SetMousePos(POINT{ LOWORD(lParam), HIWORD(lParam) });
+			GAMEMANAGER->ClickProcess();
+		}
+		break;
+	case WM_RBUTTONDOWN:
+		if (GAMEMANAGER->IsInGame()) {
+			GAMEMANAGER->SetMousePos(POINT{ LOWORD(lParam), HIWORD(lParam) });
+			GAMEMANAGER->CheatProcess();
+		}
 		break;
 	case WM_CHAR:
 		switch (wParam) {
 		case 'p':
 		case 'P':
+			if(!GAMEMANAGER->Pause()) SetTimer(hWnd, 1, 50, TimerProc);
 			break;
 		case 'r':
 		case 'R':
-			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
-				pPlayer->ReloadBullet();
+			if (!GAMEMANAGER->GetPause()) {
+				for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+					CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+					pPlayer->ReloadBullet();
+				}
 			}
 			break;
 		case 'w':
 		case 'W':
-			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
-				pPlayer->Move(EMove::UP);
+			if (!GAMEMANAGER->GetPause()) {
+				for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+					CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+					pPlayer->Move(EMove::UP);
+				}
 			}
 			break;
 		case 's':
 		case 'S':
-			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
-				pPlayer->Move(EMove::DOWN);
+			if (!GAMEMANAGER->GetPause()) {
+				for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+					CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+					pPlayer->Move(EMove::DOWN);
+				}
 			}
 			break;
 
 		case 'a':
 		case 'A':
-			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
-				pPlayer->Move(EMove::LEFT);
+			if (!GAMEMANAGER->GetPause()) {
+				for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+					CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+					pPlayer->Move(EMove::LEFT);
+				}
 			}
 			break;
 		case 'd':
 		case 'D':
-			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
-				pPlayer->Move(EMove::RIGHT);
+			if (!GAMEMANAGER->GetPause()) {
+				for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+					CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+					pPlayer->Move(EMove::RIGHT);
+				}
 			}
 			break;
 		default:
@@ -120,27 +139,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		switch (wParam) {
 		case VK_ESCAPE: PostQuitMessage(0); break;
 		case VK_UP:
-			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
-				pPlayer->Attack(EAttack::UP_ATTACK);
+			if (!GAMEMANAGER->GetPause()) {
+				for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+					CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+					pPlayer->Attack(EAttack::UP_ATTACK);
+				}
 			}
 			break;
 		case VK_DOWN:
-			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
-				pPlayer->Attack(EAttack::DOWN_ATTACK);
+			if (!GAMEMANAGER->GetPause()) {
+				for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+					CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+					pPlayer->Attack(EAttack::DOWN_ATTACK);
+				}
 			}
 			break;
 		case VK_LEFT:
-			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
-				pPlayer->Attack(EAttack::LEFT_ATTACK);
+			if (!GAMEMANAGER->GetPause()) {
+				for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+					CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+					pPlayer->Attack(EAttack::LEFT_ATTACK);
+				}
 			}
 			break;
 		case VK_RIGHT: 
-			for (CObject* d : GAMEMANAGER->GetPlayerList()) {
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
-				pPlayer->Attack(EAttack::RIGHT_ATTACK);
+			if (!GAMEMANAGER->GetPause()) {
+				for (CObject* d : GAMEMANAGER->GetPlayerList()) {
+					CPlayer* pPlayer = dynamic_cast<CPlayer*>(d);
+					pPlayer->Attack(EAttack::RIGHT_ATTACK);
+				}
 			}
 			break;
 		}
@@ -190,6 +217,8 @@ void CALLBACK TimerProc(HWND hWnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 		for (CObject* d : GAMEMANAGER->GetNPCList()) d->Draw();
 		for (CObject* d : GAMEMANAGER->GetPlayerList()) d->Draw();
 		GAMEMANAGER->DeleteNPC();
+		GAMEMANAGER->DeleteItem();
+		GAMEMANAGER->SetNewNPCTime();
 		
 	}
 

@@ -36,7 +36,7 @@ using namespace std;
 #define PIE 3.141592
 #define DR (PIE/180)
 
-#define MAX_STR 5
+#define MAX_STR 7
 
 #define OBJECT_SIZE 47
 #define CHARACTER_SIZE 37
@@ -57,3 +57,11 @@ enum { CREATE_NEW_NPC = 2 };
 
 #define MAX_AURA_X 3
 #define MAX_AURA_Y 3
+
+#define TIME_POINT 300
+#define TIME_DECREASE 500
+
+#define UP_END 95
+#define BOTTOM_END 683
+#define LEFT_END 35
+#define RIGHT_END 917

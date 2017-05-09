@@ -18,6 +18,8 @@ public:
 	void Attack(const EAttack& a_eAttack);
 	void Shoot(const EAttack& a_eAttack);
 	void ReloadBullet();
+	void ReloadBullet(CObject* a_CObject);
+
 public:
 	bool ChkCollision(const EMove& a_eMove);
 	bool ChkCollision();
@@ -34,4 +36,5 @@ private:
 	TRIVERTEX m_vert[2];
 	GRADIENT_RECT m_grect;
 	bool m_bShootAnimation;
+	
 };

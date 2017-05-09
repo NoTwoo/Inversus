@@ -5,7 +5,7 @@
 #define MAP_SIZE_X 19
 #define MAP_SIZE_Y 13
 
-#define MAX_STR 5
+#define MAX_STR 7
 
 class CGameManager
 {
@@ -31,11 +31,14 @@ public:
 
 		m_str[0] = " W / S / A / D : MOVE";
 		m_str[1] = " กๆ / ก็ / ก่ / ก้ : SHOOT";
-		m_str[2] = " KEEP PUSHING ARROW KEY : CHARGING";
+		m_str[2] = " R : RELOAD BULLET";
 		m_str[3] = " P : PAUSE";
 		m_str[4] = " ESC : EXIT";
-
+		m_str[5] = " HERE IS A MINI GAME ";
+		m_str[6] = " SEEK THE CHEATE KEY IF U CAN";
 		m_bIsInGame = false;
+		m_bPause = false;
+		m_bIsInvincible = false;
 	}
 
 	HWND getHWND() { return m_hWnd; }
@@ -84,6 +87,20 @@ public:
 	void DecreaseLife();
 	void DeleteNPC();
 
+public:
+	void SetNewNPCTime();
+
+public:
+	void DeleteItem();
+
+public:
+	const bool& Pause();
+	const bool& GetPause();
+
+public:
+	void CheatProcess();
+	const bool& GetInvincibility();
+
 private:
 	CGameManager() {};
 	CGameManager(const CGameManager&) = delete;
@@ -115,5 +132,15 @@ private:
 
 private:
 	bool m_bIsInGame;
+
+private:
+	UINT m_NPC_CREATE_TIME;
+	private:
+
+private:
+	bool m_bPause;
+
+private:
+	bool m_bIsInvincible;
 };
 

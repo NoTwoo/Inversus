@@ -1,10 +1,2 @@
-﻿  CChracter.cpp
-  CGameManager.cpp
-  CObject.cpp
-  CPanel.cpp
-  CPlayer.cpp
-  Main.cpp
-  Generating code
-  All 286 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  Finished generating code
-  Inversus.vcxproj -> S:\KPU\4-1\API\Assignment\Inversus\Release\Inversus.exe
+﻿CRotatingBullet.obj : error LNK2001: unresolved external symbol __imp__GradientFill@24
+S:\KPU\4-1\APIProject\Inversus\Inversus\Release\Inversus.exe : fatal error LNK1120: 1 unresolved externals

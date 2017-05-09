@@ -33,11 +33,13 @@ void CGameManager::ShowManual()
 	SetBkMode(m_hdc, TRANSPARENT);
 
 	int y = 210;
-	for (int i = 0; i < MAX_STR; ++i) {
+	for (int i = 0; i < MAX_STR - 2; ++i) {
 		TextOut(m_hdc, 300, y, m_str[i].c_str(), m_str[i].length());
 		y += 50;
 	}
 
+	TextOut(m_hdc, 0, 50, m_str[MAX_STR - 2].c_str(), m_str[MAX_STR - 2].length());
+	TextOut(m_hdc, 300, 100, m_str[MAX_STR - 1].c_str(), m_str[MAX_STR - 1].length());
 	SetBkMode(m_hdc, OPAQUE);
 
 	SelectObject(m_hdc, hOldBrush);
@@ -62,6 +64,7 @@ void CGameManager::ClickProcess()
 				switch (ActivePanel->GetType()) {
 				case EType::NEW_GAME:
 				if(m_PlayerList.size() != 0) m_PlayerList.clear(); 
+				m_NPC_CREATE_TIME = CREATE_NEW_NPC_TIME;
 				m_bIsInGame = true; EnterInGameScene(); InvalidateRect(m_hWnd, NULL, TRUE); break;
 				case EType::HELP: ShowManual(); break;
 				case EType::EXIT: PostQuitMessage(0); break;
@@ -191,7 +194,7 @@ void CGameManager::EnterInGameScene()
 	pPlayer->Init();
 	m_PlayerList.push_back(pCharacter);
 
-	SetTimer(m_hWnd, CREATE_NEW_NPC, CREATE_NEW_NPC_TIME, NULL);
+	SetTimer(m_hWnd, CREATE_NEW_NPC, m_NPC_CREATE_TIME, NULL);
 }
 
 void  CGameManager::IncreaseScore(const UINT& a_uScore)
@@ -294,3 +297,59 @@ void  CGameManager::SetInGame(bool const& a_bool)
 
 	}
 }
+
+void  CGameManager::SetNewNPCTime()
+{
+	if ((m_uScore % TIME_POINT) == 0 &&  m_uScore > 0 && m_NPC_CREATE_TIME >= TIME_DECREASE * 2) {
+
+		KillTimer(m_hWnd, CREATE_NEW_NPC);
+		m_NPC_CREATE_TIME -= TIME_DECREASE;
+		SetTimer(m_hWnd, CREATE_NEW_NPC, m_NPC_CREATE_TIME, NULL);
+	}
+
+}
+
+void CGameManager::DeleteItem()
+{
+
+	if (m_GameList.size() > 0) {
+		for (list<CObject*>::iterator itor = m_GameList.begin(); itor != m_GameList.end();) {
+			if (dynamic_cast<CBullet*>(*itor)) {
+				CBullet* cBullet = dynamic_cast<CBullet*>(*itor);
+				if (cBullet->GetDelete()){
+					itor = m_GameList.erase(itor); break; 
+				}
+				else ++itor;
+
+			}
+
+			else ++itor;
+
+		}
+
+	}
+}
+
+const bool& CGameManager::Pause()
+{
+	m_bPause = !m_bPause;
+
+	if (m_bPause) {
+		KillTimer(m_hWnd, 1);
+		KillTimer(m_hWnd, CREATE_NEW_NPC);
+		return m_bPause;
+	}
+
+	SetTimer(m_hWnd, CREATE_NEW_NPC, m_NPC_CREATE_TIME, NULL);
+	return m_bPause;
+}
+
+
+const bool& CGameManager::GetPause() { return m_bPause; }
+
+void CGameManager::CheatProcess()
+{
+	if (m_MousePos.x >= 70 && m_MousePos.x <= 80 && m_MousePos.y >= 20 && m_MousePos.y <= 30) m_bIsInvincible = true;
+}
+
+const bool& CGameManager::GetInvincibility() { return  m_bIsInvincible; }
